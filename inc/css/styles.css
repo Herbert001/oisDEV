@@ -1,0 +1,203 @@
+body {
+    background-color: #7C7C9A!important;
+}
+
+.navbar .nav > li > a { 
+    color: #F9F2FA; 
+    text-transform: uppercase;
+    line-height:28px;
+    background-color: rgba(54,50,56,0.0);
+}
+.navbar .nav > li > a:hover {
+    background-color: rgba(54,50,56,0.5);
+}
+.navbar {
+    background: rgba(54,50,56,0.5);
+    border-color: #050505;
+}
+
+ .navbar-inverse .navbar-brand {
+    color: #14C2F7;
+    line-height: 25px;
+    height: 50px;
+}
+.navbar-inverse .navbar-brand:hover {
+    color:#14C2F7;
+}
+.divider-vertical {
+    height: 15px;                   /* any height */
+    border-left: 1px solid gray;     /* right or left is the same */
+    float: left;                     /* so BS grid doesn't break */
+    opacity: 0.9;                    /* optional */
+    margin: 0 15px;                  /* optional */
+}
+
+.text-info {
+    line-height: 9px;
+    font-size: 10px;
+    color: white;
+}
+
+.jumbotron {
+    
+    background:url("../../img/buero.jpg")no-repeat center center; 
+    filter: grayscale(40%);
+    filter:blur(0px);
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size:cover;
+    /*background-attachment: fixed;*/
+    margin-top:2px;
+    margin-bottom:1px;
+    padding-bottom: 0px;
+    min-height:300px;
+}
+.jumbotron .mod1 {
+    color: #D5DBE3;
+    text-shadow: 3px 3px 10px #518494;
+    margin-top:40px;
+    font-family: 'Montserrat', sans-serif;
+    font-size : 35px;
+}
+
+.nox_border {
+    min-height: 300px;
+    background-color: grey;
+}
+.box_border {
+    background-color: black;
+}
+.container-fluid {
+    width: 100%;
+    margin-top:2px;
+    color: black;
+    z-index: 9;
+}
+ .panel-transparent {
+        background: none;
+    }
+
+    .panel-transparent .panel-heading{
+        color: black;
+    }
+
+    .panel-transparent .panel-body{
+        color:black;
+    }
+
+.panel-title  {
+    text-align: center;
+}
+
+.bgimage {
+background-image: url(../img/sky.jpg);
+background-size: 100%;
+-webkit-filter: grayscale(0.2);
+    
+}
+h4.panel-title {
+    font-size: 16px;
+}
+h4, h2.idshadow {
+    color : #D5DBE3;
+    text-shadow: 3px 3px 2px #26414A;
+    }
+    h2.shadow {
+        color : #fa0000 !important;
+        text-shadow: 3px 3px 2px #000;        
+    }
+    
+    h4.ident {
+        color : #999
+    }    
+h5.hist {
+    font-size: 12px;
+    color: whitesmoke;
+    background-color: black;
+}
+
+.btn-primary-white {
+    color: whitesmoke!important;
+    border-color: #333B3B;
+    background: #7C7C9A;
+}
+
+.panel-heading {
+    text-align: center;
+    font-size: 20px;
+    font-variant: small-caps;
+    letter-spacing: 9px;
+    color: white!important;
+    background-color: #7C7C9A!important;
+    margin: 1px;
+    padding: 1px;
+}
+.panel {
+  
+  padding:10px;
+  margin-bottom: @line-height-computed;
+  background-color: @panel-bg;
+  border: 0.5px solid ;
+  border-radius: @panel-border-radius;
+  .box-shadow(0 1px 1px rgba(200,0,0,0.2));
+}
+.panel-height {
+max-height: 450px;
+overflow-y: scroll;
+}
+
+
+.list-group-item {
+    padding: 8px 10px;
+}
+.loginbox {
+    margin-top: 40px;
+    padding: 30px;
+
+}
+.loginpage {
+    font-size: 22px!important;
+}
+.logintop {
+    margin-top: 130px;
+}
+#feedback {
+    line-height: 19px;
+}
+#red {
+    text-align: center;
+    font-size: 15px;
+   letter-spacing: 9px;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+}
+#green {
+   text-align: center;
+   font-size: 15px;
+   letter-spacing: 9px;
+    background-color: green;
+    color: white; 
+    font-weight: bold;
+}
+#feedback {
+    display: none;
+}
+
+.asteriskField {
+   color: black;
+    } 
+ .error-message {
+   color: #7d0000;
+    }
+.footer {
+    position: fixed;
+    height: 30px;
+    bottom: 0;
+    width: 100%;
+    background-color: #26414A;
+    padding-left: 30px;
+    font-size: 10px;
+    color:#D5DBE3;
+}    

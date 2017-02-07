@@ -1,0 +1,144 @@
+body {
+    background-color: #7C7C9A!important;
+}
+
+.navbar .nav > li > a { 
+    color: #F9F2FA; 
+    text-transform: uppercase;
+    line-height:20px;
+    background-color: rgba(54,50,56,0.0);
+}
+.navbar .nav > li > a:hover {
+    background-color: rgba(54,50,56,0.5);
+}
+.navbar {
+    background: rgba(54,50,56,0.5);
+    border-color: #050505;
+}
+
+ .navbar-inverse .navbar-brand {
+    color: #14C2F7;
+    line-height: 30px;
+    height: 55px;
+}
+.navbar-inverse .navbar-brand:hover {
+    color:#14C2F7;
+}
+
+.text-info {
+    line-height: 9px;
+    font-size: 10px;
+    color: white;
+}
+
+.jumbotron {
+    
+    background:url("/img/buero.jpg");
+    background-size:cover;
+    background-attachment: fixed;
+    margin-top:2px;
+    margin-bottom:1px;
+    padding-bottom: 0px;
+    min-height:320px;
+}
+.jumbotron .mod1 {
+    color:white;
+    text-shadow: 3px 3px 10px #518494;
+    margin-top:40px;
+}
+
+.nox_border {
+    min-height: 300px;
+    background-color: grey;
+}
+.box_border {
+    background-color: black;
+}
+.container-fluid {
+    width: 100%;
+    margin-top:2px;
+    color: black;
+    z-index: 9;
+}
+ .panel-transparent {
+        background: none;
+    }
+
+    .panel-transparent .panel-heading{
+        color: black;
+    }
+
+    .panel-transparent .panel-body{
+        color:black;
+    }
+
+.panel-title  {
+    text-align: center;
+}
+
+
+h4.panel-title {
+    font-size: 16px;
+}
+h4, h2.idshadow {
+    text-shadow: 3px 3px 10px #518494;
+}
+
+.ausgabeText {   
+    display: none ;    
+}
+
+.panel-heading {
+    text-align: center;
+    height: 45px;
+    font-size: 20px;
+    font-variant: small-caps;
+    letter-spacing: 5px;
+    color: white!important;
+    background-color: #7C7C9A!important;
+    margin: 1px;
+    padding: 1px;
+}
+.panel {
+  
+  padding:0;
+  
+ 
+  border: 0.5px solid ;
+  
+  
+}
+h4, h2 {
+ color:white;
+       
+}
+.list-group-item {
+    padding: 8px 10px;
+}
+.loginbox {
+    margin-top: 40px;
+    padding: 30px;
+
+}
+.loginpage {
+    font-size: 22px!important;
+}
+.footer {
+    background-color: rgba(54,50,56,0.5);
+    color: oldlace;
+}
+#lowpadding {
+    margin-top: 15px;
+}
+.notes_top{
+    background-color: rgba(54,50,56,0.5);
+    color:antiquewhite;
+}
+.border_notes{
+    border-style: solid;
+    border-color: lightgrey;
+    border-top: 19px;
+    border-width: 0.5px;
+    border-left: 10px solid lightgrey;
+}
+
