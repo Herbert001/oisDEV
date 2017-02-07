@@ -12,9 +12,6 @@ if(!empty($_GET['uid']))
     $_SESSION['uids']= $unitid ;
     }
 
-include_once 'connectdb.php';
-
-//check if form is submitted
 
 ?>
 <!DOCTYPE html>
@@ -33,7 +30,8 @@ include_once 'connectdb.php';
 </head>
 <body>
 
- <?php include 'header2.php';   ?>     
+ <?php  include 'header2.php';
+        include_once 'connectdb.php';?>     
 
 
 <div class="container">
