@@ -11,39 +11,35 @@ require 'inc/func/function.php';
 
 if(isset($_REQUEST['submit']))
 {
-$errorMessage = "<br>";
-    
-$vorname=      clean($_POST['cp_first_name']);
-$firma=     clean($_POST['k_name_company']);
-$nachname=  clean($_POST['cp_last_name']);
-$tel_a=       checkfon($_POST['phone_a']);
-$tel_b=       checkfon($_POST['phone_b']);
-$email=     trim($_POST['e_mail']);
-$fax=       trim($_POST['fax']);
-$fax = delspace($fax);
-$name=     clean($_POST['name']);
-$datek=     date("Y-m-d H:i:s");
-//$notes_with_break = str_replace("\n","< br>",$notes);
 
+    $errorMessage   =   "<br>";   
+    $vorname        =   $db->real_escape_string(clean($_POST['cp_first_name']));
+    $firma          =   $db->real_escape_string(clean($_POST['k_name_company']));
+    $nachname       =   $db->real_escape_string(clean($_POST['cp_last_name']));
+    $tel_a          =   $db->real_escape_string(checkfon($_POST['phone_a']));
+    $tel_b          =   $db->real_escape_string(checkfon($_POST['phone_b']));
+    $email          =   $db->real_escape_string(trim($_POST['e_mail']));
+    $fax            =   $db->real_escape_string(trim($_POST['fax']));
+    $fax            =   delspace($fax);
+    $name           =   $db->real_escape_string(clean($_POST['name']));
+    $datek          =   $db->real_escape_string(date("Y-m-d H:i:s"));
     
-if ( empty($kunr) == TRUE  OR                                                  //Prüfung auf ausgefüllte Felder
-     empty($firma) == TRUE OR
-     empty($plz) == TRUE OR
-     empty($strasse) == TRUE OR
-     empty($tel_a) == TRUE
-    )                                                   
-{
-   echo "<a href='javascript: history.go(-1)'>Es wurden nicht alle benötigten Felder ausgefüllt!</a>";
-   
-}                                                                               // Prüfung Ende
-else
-{
-    insert_new_customer();      //Abfragequery in function.php
-    
-}
+    if (empty($kunr)   == TRUE OR                                               //Prüfung auf ausgefüllte Felder
+        empty($firma)  == TRUE OR
+        empty($plz)    == TRUE OR
+        empty($strasse)== TRUE OR
+        empty($tel_a)  == TRUE
+       )                                                   
+    {
+        echo "<a href='javascript: history.go(-1)'>Es wurden nicht alle benötigten Felder ausgefüllt!</a>";
+    }                                                                           // Prüfung Ende
+        else
+        {
+        insert_new_customer();                                                  //Abfragequery in function.php   
+        }
 }      
-    $kunr = $db->real_escape_string($_POST['k_kdnr']);   // Prüfung zusätzlich ob KdNr schon vorhanden
-    check_kdnr($kunr);                                       // Abfrage in function.php
+    $kunr = $db->real_escape_string($_POST['k_kdnr']);                          // Prüfung zusätzlich ob KdNr schon vorhanden
+    check_kdnr($kunr);                                                          // Abfrage in function.php
     $result = $db->query($customer_id);                                     
                $result->num_rows;                              
                $rows = $result->fetch_all(MYSQLI_ASSOC);
