@@ -4,13 +4,16 @@
     color:white;
     background: black;
 }
-
+input, textarea{
+    background-color:#666;
+    color: #FFF;
+}
 body {
     background-color: #7C7C9A!important;
 }
 
-.navbar .nav > li > a { 
-    color: #F9F2FA; 
+.navbar .nav > li > a {
+    color: #F9F2FA;
     text-transform: uppercase;
     line-height:28px;
     background-color: rgba(54,50,56,0.0);
@@ -23,7 +26,7 @@ body {
     border-color: #050505;
 }
 
- .navbar-inverse .navbar-brand {
+.navbar-inverse .navbar-brand {
     color: #14C2F7;
     line-height: 25px;
     height: 50px;
@@ -46,8 +49,8 @@ body {
 }
 
 .jumbotron {
-    
-    background:url("../../img/buero.jpg")no-repeat center center; 
+
+    background:url("../../img/buero.jpg")no-repeat center center;
     filter: grayscale(40%);
     filter:blur(0px);
     -webkit-background-size: 100% 100%;
@@ -81,27 +84,27 @@ body {
     color: black;
     z-index: 9;
 }
- .panel-transparent {
-        background: none;
-    }
+.panel-transparent {
+    background: none;
+}
 
-    .panel-transparent .panel-heading{
-        color: black;
-    }
+.panel-transparent .panel-heading{
+    color: black;
+}
 
-    .panel-transparent .panel-body{
-        color:black;
-    }
+.panel-transparent .panel-body{
+    color:black;
+}
 
 .panel-title  {
     text-align: center;
 }
 
 .bgimage {
-background-image: url(../img/sky.jpg);
-background-size: 100%;
--webkit-filter: grayscale(0.2);
-    
+    background-image: url(../img/sky.jpg);
+    background-size: 100%;
+    -webkit-filter: grayscale(0.2);
+
 }
 h4.panel-title {
     font-size: 16px;
@@ -109,15 +112,15 @@ h4.panel-title {
 h4, h2.idshadow {
     color : #D5DBE3;
     text-shadow: 3px 3px 2px #26414A;
-    }
-    h2.shadow {
-        color : #fa0000 !important;
-        text-shadow: 3px 3px 2px #000;        
-    }
-    
-    h4.ident {
-        color : #999
-    }    
+}
+h2.shadow {
+    color : #fa0000 !important;
+    text-shadow: 3px 3px 2px #000;
+}
+
+h4.ident {
+    color : #999
+}
 h5.hist {
     font-size: 12px;
     color: whitesmoke;
@@ -141,17 +144,17 @@ h5.hist {
     padding: 1px;
 }
 .panel {
-  
-  padding:10px;
-  margin-bottom: @line-height-computed;
-  background-color: @panel-bg;
-  border: 0.5px solid ;
-  border-radius: @panel-border-radius;
-  .box-shadow(0 1px 1px rgba(200,0,0,0.2));
+
+    padding:10px;
+    margin-bottom: @line-height-computed;
+    background-color: @panel-bg;
+    border: 0.5px solid ;
+    border-radius: @panel-border-radius;
+    .box-shadow(0 1px 1px rgba(200,0,0,0.2));
 }
 .panel-height {
-max-height: 450px;
-overflow-y: scroll;
+    max-height: 450px;
+    overflow-y: scroll;
 }
 
 
@@ -175,17 +178,17 @@ overflow-y: scroll;
 #red {
     text-align: center;
     font-size: 15px;
-   letter-spacing: 9px;
+    letter-spacing: 9px;
     background-color: red;
     color: white;
     font-weight: bold;
 }
 #green {
-   text-align: center;
-   font-size: 15px;
-   letter-spacing: 9px;
+    text-align: center;
+    font-size: 15px;
+    letter-spacing: 9px;
     background-color: green;
-    color: white; 
+    color: white;
     font-weight: bold;
 }
 #feedback {
@@ -193,11 +196,11 @@ overflow-y: scroll;
 }
 
 .asteriskField {
-   color: black;
-    } 
- .error-message {
-   color: #7d0000;
-    }
+    color: black;
+}
+.error-message {
+    color: #7d0000;
+}
 .footer {
     position: fixed;
     height: 30px;
@@ -207,4 +210,4 @@ overflow-y: scroll;
     padding-left: 30px;
     font-size: 10px;
     color:#D5DBE3;
-}    
+}
