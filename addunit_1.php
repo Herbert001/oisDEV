@@ -122,7 +122,7 @@ if (empty($_SESSION['usr_id'])) {
                                     <div class="input-group-addon">
                                         <i class="fa fa-user fa-fw" aria-hidden="true" ></i>
                                     </div>
-                                    <select type="text" class="form-control" name="selectname" id="name" value="" autofocus="" placeholder="Firma" />
+                                    <!--<select type="text" class="form-control" name="selectname" id="name" value="" autofocus="" placeholder="Firma" />-->
                                     <?php
                                     customer();                                                           // Function Nr.: 23020801 $da
                                     $ergebnisvonHerstellern = $db->query($dort);
