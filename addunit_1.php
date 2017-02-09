@@ -86,7 +86,7 @@ if (empty($_SESSION['usr_id'])) {
                             <!-- *********************Start Formular********************* -->
                             <!--                 Neuen Anlage hinzufügen                  -->
                             <!-- ******************************************************** -->
-                            <form class="form-horizontal" id ="form" name="form" action="addunit_1.php" method="post" >
+                            <form class="form-horizontal" id ="form" name="form" action="addunit_2.php" method="post" >
                                 <div class="form-group">
                                     <label class="col-md-4 col-sm-4 col-xs-4 control-label" for="uid">Anlagen ID <i class="asteriskField">*</i></label>
                                     <div class="input-group col-md-6"><div id="feedback"></div>
@@ -109,56 +109,56 @@ if (empty($_SESSION['usr_id'])) {
                                                   echo "<option>{$resultIn['id']}. {$resultIn['typ_auswahl']}</option>";
                                                 }
                                                 ?>
-                                            </select>
-                                        </div>
-                                        </select><div class="error-message"><?php echo $errorMessage2; ?> </<div>
-                                            </div>
-                                        </div></div>
 
-                                    <div class="form-group">
-                                        <label for="firma" class="col-sm-4 control-label">Kunde</label>
-                                        <div class="col-sm-6">
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-user fa-fw" aria-hidden="true" ></i>
-                                                </div>
-                                                <select type="text" class="form-control" name="selectname" id="name" value="" autofocus="" placeholder="Firma" />
-                                                <?php
-                                                customer();                                                           // Function Nr.: 23020801 $da
-                                                $ergebnisvonHerstellern = $db->query($dort);
-                                                // Ausgabe über while Schleife, da mehr als ein Ergebnis erwartet wird
-                                                while ($endresult = $ergebnisvonHerstellern->fetch_array()) {
-                                                  echo "<option>{$endresult['cs_customer_name']} |{$endresult['cs_id']} </option>";
-                                                }
-                                                ?>
-                                                </select>
-
-                                            </div>
-                                            <!--Ausgabe Fehlermeldung -->
-                                            <span class="help-block" id="error">
-                                            </span>
-                                            <!--Ende Ausgabe -->
                                         </div>
+                                        </select><div class="error-message"><?php echo $errorMessage2; ?> </div>
                                     </div>
+                                </div></div>
 
-
-                                    <p></p>
-                                    <a class="btn btn-primary-white pull-left" href="Kunde_add2.php">
-                                        <i class="fa fa-plus-square fa-1x"></i> Neuen Kunden anlegen</a>
-                                    <button type="submit" name="submit" class="btn pull-right btn-primary-white">Give it to me</button>
-
-                                    <div class="col-md-4 col-sm-4"></div>
+                        <div class="form-group">
+                            <label for="firma" class="col-sm-4 control-label">Kunde</label>
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-user fa-fw" aria-hidden="true" ></i>
+                                    </div>
+                                    <select type="text" class="form-control" name="selectname" id="name" value="" autofocus="" placeholder="Firma" />
+                                    <?php
+                                    customer();                                                           // Function Nr.: 23020801 $da
+                                    $ergebnisvonHerstellern = $db->query($dort);
+                                    // Ausgabe über while Schleife, da mehr als ein Ergebnis erwartet wird
+                                    while ($endresult = $ergebnisvonHerstellern->fetch_array()) {
+                                      echo "<option>{$endresult['cs_customer_name']} |{$endresult['cs_id']} </option>";
+                                    }
+                                    ?>
+                                    </select>
 
                                 </div>
-                            </form>
+                                <!--Ausgabe Fehlermeldung -->
+                                <span class="help-block" id="error">
+                                </span>
+                                <!--Ende Ausgabe -->
+                            </div>
                         </div>
+
+
+                        <p></p>
+                        <a class="btn btn-primary-white pull-left" href="Kunde_add2.php">
+                            <i class="fa fa-plus-square fa-1x"></i> Neuen Kunden anlegen</a>
+                        <button type="submit" name="submit" class="btn pull-right btn-primary-white">Give it to me</button>
+
+                        <div class="col-md-4 col-sm-4"></div>
+
                     </div>
+                    </form>
                 </div>
             </div>
+        </div>
+    </div>
 
 
 
-            <script src = "inc/js/bootstrap.js"></script>
-            <?php
-            include_once 'footer.php';
+    <script src = "inc/js/bootstrap.js"></script>
+    <?php
+    include_once 'footer.php';
 
