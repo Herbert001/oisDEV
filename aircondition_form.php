@@ -20,7 +20,7 @@
        <div class="input-group-addon">
         <i class="fa fa-hashtag fa-fw"></i>
        </div>
-        <input type="text" class="form-control" name="u_id" id="u_id" readonly value="<?php echo $form_id; ?>" placeholder="Kundennummer" />
+        <input type="text" class="form-control" name="u_id" id="u_id" value="<?php echo $form_id; ?>" placeholder="Kundennummer" readonly disabled />
       </div>
         <!--Ausgabe Fehlermeldung -->
          <div id="feedback"></div>
@@ -35,7 +35,7 @@
       <div class="input-group-addon">
        <i class="fa fa-building fa-fw" aria-hidden="true" ></i>
       </div>
-       <input type="text" class="form-control" name="k_name_company" title="Bei Privatperson vollständigen Namen angeben!" id="firma" value="<?php echo $kd_nr_ex[0]; ?>" placeholder="Firmenname oder vollen Vor-, Nachnamen" readonly/>
+       <input type="text" class="form-control" name="k_name_company" title="Bei Privatperson vollständigen Namen angeben!" id="firma" value="<?php echo $kd_nr_ex[0]; ?>" placeholder="Firmenname oder vollen Vor-, Nachnamen" readonly disabled/>
      </div>
         <!--Ausgabe Fehlermeldung -->
         <div class="help-block with-errors"></div>
@@ -48,9 +48,9 @@
     <div class="col-sm-10">
      <div class="input-group">
       <div class="input-group-addon">
-       <i class="fa fa-road fa-fw" aria-hidden="true"></i>
+       <i class="fa fa-industry fa-fw" aria-hidden="true"></i>
       </div>
-      <input type="text" class="form-control" name="a_typ" id="a_typ" value="<?php echo $cat_id[1];?>" readonly />
+         <input type="text" class="form-control" name="a_typ" id="a_typ" value="<?php echo $cat_id[1];?>" bg-primary readonly disabled />
      </div>
       <!--Ausgabe Fehlermeldung -->
        <div class="help-block with-errors"></div>
@@ -60,14 +60,13 @@
         <div class="row">
             <div class="col-md-12">
   <div class="form-group">
-    <label for="plz" class="col-sm-2 col-xs-2 control-label">PLZ</label>
+    <label for="plz" class="col-sm-2 col-xs-2 control-label">Typ Aussengerät</label>
     <div class="col-sm-10 col-md-10 col-xs-2">
      <div class="input-group">
          <div class="input-group-addon">
        <i class="fa fa-codepen fa-fw" aria-hidden="true"></i>
-      </div>
-      <input type="number" class="form-control" name="k_plz_id" id="plz" data-minlength="5" pattern="^[0-9]$" data-error="Fünfstellig, nur Zahlen!" required="" placeholder="PLZ" />
-
+         </div>
+      <input type="text" class="form-control" name="typ_ag" id="typ_ag" data-minlength="2" required="" placeholder="Ausseneinheit" />
      </div>
        <!--Ausgabe Fehlermeldung -->
         <div class="help-block with-errors"></div>
@@ -75,34 +74,36 @@
     </div>
   </div>
     <div class="form-group">
-      <label for="ort" class="col-sm-2 col-xs-2 control-label">Ort</label>
+      <label for="ort" class="col-sm-2 col-xs-2 control-label">Typ Innengerät</label>
       <div class="col-sm-10 col-md-10 col-xs-2">
        <div class="input-group">
         <div class="input-group-addon">
          <i class="fa fa-codepen fa-fw" aria-hidden="true"></i>
         </div>
-         <input type="text" class="form-control" name="ort" id="ort" required="" data-required-error="Pflichtfeld" placeholder="Ort" />
+         <input type="text" class="form-control" name="typ_ig" id="typ_ig" required="" data-required-error="Pflichtfeld" placeholder="Inneneinheit" />
        </div>
         <!--Ausgabe Fehlermeldung -->
         <div class="help-block with-errors"></div>
         <!--Ende Ausgabe -->
        </div>
      </div>
+          <!-- THIS needs to be hidden in firstplace -->
+
   <div class="form-group">
-    <label for="tel" class="col-sm-2 control-label">Telefonnummer 1</label>
+    <label for="tel" class="col-sm-2 control-label">Typ Innengerät 2</label>
     <div class="col-sm-10">
      <div class="input-group">
       <div class="input-group-addon" aria-hidden="true">
        <i class="fa fa-phone fa-fw"></i>
       </div>
-      <input type="number" class="form-control" name="k_tel_company" required="" id="tel" pattern="^[0-9]$" data-error="Pflichtfeld, nur Zahlen" placeholder="Telefonnummer" />
+      <input type="text" class="form-control" name="typ_ig_2" required="" id="typ_ig_2"  />
      </div>
         <!--Ausgabe Fehlermeldung -->
         <div class="help-block with-errors"></div>
             <!--Ende Ausgabe -->
      </div>
   </div>
-
+          <!-- THIS needs to be hidden -->
 <div class="form-group">
     <label for="tel" class="col-sm-2 control-label">Telefonnummer 2</label>
     <div class="col-sm-10">
