@@ -1,29 +1,23 @@
 <?php
 session_start();
 if (empty($_SESSION['usr_id'])) {
-                       header("Location: index.php?uid=". $_SESSION['uids'] ."");
-                       exit; 
-                       }else
-                           {
-                            //echo "stringjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj";
-                            //echo  var_dump ($_SESSION['uids']);
-                            }
+   header("Location: index.php?uid=". $_SESSION['uids'] ."");
+   exit;
+   }else{
+     echo " Sie sind mit der SessionID " . session_id() ." angemeldet!";
+        }
 ?>
 <!doctype html>
 <html>
-    <head>
-        <title> DeTec UnitDataInfoSystem ALPHA #0.7.2</title>
-        <meta name= "viewport" content = "width=device-width, initial-scale=1.0">
-        <link href = "inc/css/bootstrap.css" rel = "stylesheet">
-        <link href = "inc/css/font-awesome.min.css" rel="stylesheet" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src ="inc/js/bootstrap.js"></script>
-        <link href = "inc/css/styles3.css" rel = "stylesheet">
-
-
-
-        
-    </head>
+<head>
+    <title> DeTec UnitDataInfoSystem ALPHA #0.7.2</title>
+    <meta name= "viewport" content = "width=device-width, initial-scale=1.0">
+    <link href = "inc/css/bootstrap.css" rel = "stylesheet">
+    <link href = "inc/css/font-awesome.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src ="inc/js/bootstrap.js"></script>
+    <link href = "inc/css/styles3.css" rel = "stylesheet">
+</head>
 <body>
 <style type="text/css">
     #ausgabeText{display: none;}
@@ -32,7 +26,7 @@ if (empty($_SESSION['usr_id'])) {
 include 'header2.php';
 include 'inc/func/anzeige_func.php';
 include 'inc/func/function.php';
-  if(isset($_REQUEST['submit'], $_POST['identid']))                             // Abfrage ob Button gedrückt wurde und Variable vorhanden                         
+  if(isset($_REQUEST['submit'], $_POST['identid']))                             // Abfrage ob Button gedrückt wurde und Variable vorhanden
   {
     $errorMessage = "<br>";
     $idnr=  clean($_POST['identid']);
@@ -40,7 +34,7 @@ include 'inc/func/function.php';
     echo "No way";
     exit;
   }
-  if(empty($idnr))    
+  if(empty($idnr))
   { $error_no_id = "Es wurde keine ID eingegeben!" ;}
   else{
     // Abfrage der ID Nummer
@@ -56,18 +50,18 @@ include 'inc/func/function.php';
         exit;
     }}
   ;}
- ?>       
+ ?>
 <div class="jumbotron text-left">
   <div class="container">
   <h1 class="mod1">
-      
+
 
                                                                        <!-- Erkennung welcher Typ von Anlage! Kälte, Klima, Druckluft, etc.
                                                                                 //Abfrage welche Spalte in unit_link_tab fuer die angegebene u_id
                                                                                 ///belegt ist, damit die Ausgabe je nach unit angepasst werden kann. -->
-<?php 
-$query_check =("SELECT a.u_id, b.aircondition, b.aircompressor, b.chiller, b.airdryer 
-                     FROM unit AS a                                             
+<?php
+$query_check =("SELECT a.u_id, b.aircondition, b.aircompressor, b.chiller, b.airdryer
+                     FROM unit AS a
                      LEFT JOIN unit_link_tab AS b
                      ON a.u_id = b.aircondition
                      OR a.u_id = b.aircompressor
@@ -90,12 +84,12 @@ if ($result = $db->query($query_check)) {                                   //Ch
 	}else {
   		$oth_query = 1;
 }
-}}};                     
+}}};
 get_unit_data_acr($unit_num_id);                                               //Funktion 2017010201 | hole Anlagendetails
-customer_unit($unit_num_id);                                                  // Funktion 2017310101 | hole Kundendaten                                             
+customer_unit($unit_num_id);                                                  // Funktion 2017310101 | hole Kundendaten
                                                                                 // Abfrage Historie
 $historie =("SELECT a.id, a.u_id, b.u_id, b.date_add, b.notes, b.name_short, d.cat_name
-              FROM unit AS a 
+              FROM unit AS a
               LEFT JOIN historie AS b
               ON a.u_id = b.u_id
               LEFT JOIN user AS c
@@ -119,49 +113,64 @@ if ($result = $db->query($customer_unit)) {                                     
             </div>                                                              <!-- Ausgabe Kundenadresse Ende -->
             <div class ='col-md-offset-1 col-md-6 col-xs-offset-0 col-xs-12'>   <!-- Ausgabe Kontaktperson Start -->
              <div class='col-md-5 col-xs-12 pull-right' id='ausgabeText'>
-             
-                <h4 class='idshadow'><?php if (isset($row['Nachname']) ) {  echo "Ansprechpartner: ";}else{ echo "u";} ?><br /> 
+
+                <h4 class='idshadow'><?php if (isset($row['Nachname']) ) {  echo "Ansprechpartner: ";}else{ echo "u";} ?><br />
                 <h4 class='idshadow'><?php echo $row['Vorname']. " ". $row['Nachname']; ?><br />
                 <?php istvorhd($row['Tel2']);
                  ?>
                     <h4 class='idshadow'><i class="fa fa-phone" aria-hidden="true"></i><?php echo " ".$row['Tel1']. "<br /><i class='fa fa-phone' aria-hidden='true'></i>" ." ". $row['Tel2']; ?><br />
-                    <h4 class='idshadow'><i class="fa fa-at" aria-hidden="true"><?php echo " ".$row['Email']. "</i></h4>" ;?>
-                                </div></div></div>
-                    <div class = 'container text-left'>    
+                    <h4 class='idshadow'><i class="fa fa-at" aria-hidden="true"><?php echo " ".$row['Email']. "</i></h4>" ;
+                     echo  "</div></div></div>";
+                                                   // Setzen der Variablen zur späteren Verwendung
+
+}}else {echo "<h2 class='idshadow'>". $error_no_id. "<br />";}}
+//$db -> close();
+                                  // Abfrage, Ausgabe wieviele Anlagen sind unter der u_id angelegt -->
+                     //get_units($unit_num_id);
+$units = ("SELECT a.u_id, a.ident_id FROM unit a WHERE a.u_id = 4711");
+
+
+
+                   ?> <div class = 'container text-left'>
                         <div class='row' id='lowpadding'>
                             <div class='col-md-4 col-xs-6'> <h4 class='idshadow'> Kundennummer:&nbsp; <?php echo $row['cs_id'];?></h4></div>
                             <div class='col-md-4 col-xs-6'> <h4 class='idshadow' pull-right> Unitnummer:&nbsp; <?php echo $unit_num_id;?></h4></div>
+                       <?php     if ($result = $db->query($units)) {                                     //Abfrage Kundendaten
+                        if ($result->num_rows) {                                                    //Name, Adresse, Ort
+                         $rows = $result->fetch_all(MYSQLI_ASSOC);
+                           foreach ($rows as $row) {                           // Ausgabe units in Schleife da mehrere vorhanden sein können
+                            ?>
                             <div class='col-md-4 col-xs-12'> <h4 class='idshadow' pull-right> IdentifikationsID:&nbsp; <?php echo $row['ident_id'];?></h4></div>
                         </div></div>
 <?php
-}
-}else {echo "<h2 class='idshadow'>". $error_no_id. "<br />";}}
+                        }}else { echo "Keine Daten";}}
+
 
 if ($result = $db->query($get_unit_data_acr)) {                                     //Abfrage Anlagendetails
     if ($result->num_rows >=1) {                                                    //Typ, Sernr etc
         $rows = $result->fetch_all(MYSQLI_ASSOC);
-        foreach ($rows as $row){ 
+        foreach ($rows as $row){
    }}else{
 echo "<h2 class='idshadow'>Fehler Datenbankabfrage <br />";}}
-       
+
 
 ?>
-</div>       
+</div>
 </div>
 <script>
      $(function(){                                                              //SlideDown wenn Ansprechpartner vorhanden
         if($.trim($("#ausgabeText").html())==''){
          $("#ausgabeText").hide();
-        }else { 
+        }else {
           $("#ausgabeText").slideDown(1200);
         }
         })
-</script>   
+</script>
 <!-- **************************************************Ausgabe Anlagendaten *************************************** -->
 <?php
 if (!empty ($unit_num_id)){
   echo "Id  {$unit_num_id}  gesetzt Abfrage kann starten";
-  
+
 }else{
   echo " ID nicht gesetzt, Rest kann abgebrochen werden";
   exit;
@@ -175,7 +184,7 @@ if (!empty ($unit_num_id)){
      </div>
 
         <ul class="list-group">
-            <li class="list-group-item"><i class="fa fa-building-o fa-fw" aria-hidden="true"></i>&nbsp;Hersteller:<div class=pull-right> 
+            <li class="list-group-item"><i class="fa fa-building-o fa-fw" aria-hidden="true"></i>&nbsp;Hersteller:<div class=pull-right>
                     <!-- Ausgabe und Prüfung Hersteller Anfang -->
                     <?php
                     if ($row['Hersteller'] != NULL) {
@@ -198,7 +207,7 @@ if (!empty ($unit_num_id)){
                     <!-- Ausgabe und Prüfung Typ Ende -->
             </li>
 
-            <li class="list-group-item"><i class="fa fa-hashtag fa-fw" aria-hidden="true"></i>&nbsp;Ser. Nr.:<div class=pull-right> 
+            <li class="list-group-item"><i class="fa fa-hashtag fa-fw" aria-hidden="true"></i>&nbsp;Ser. Nr.:<div class=pull-right>
                     <!-- Ausgabe und Prüfung Seriennummer Anfang -->
                     <?php
                     if ($row['Seriennr'] != NULL) {
@@ -243,7 +252,7 @@ if (!empty ($unit_num_id)){
                     ?></div>
                     <!-- Prüfung und Ausgabe KM- Menge ENDE -->
             </li>
-            <li class="list-group-item"><i class="fa fa-cogs fa-fw" aria-hidden="true"></i>&nbsp;Kälteleistung(kW):<div class=pull-right> 
+            <li class="list-group-item"><i class="fa fa-cogs fa-fw" aria-hidden="true"></i>&nbsp;Kälteleistung(kW):<div class=pull-right>
                     <!-- Prüfung und Ausgabe Kälteleistung ANFANG -->
                     <?php
                     if ($row['Leistung'] != NULL) {
@@ -293,12 +302,12 @@ if (!empty ($unit_num_id)){
         </ul>
     </div>
 </div>
-                                
-                                                               
+
+
 
 <div class="col-md-offset-1 col-md-6">
     <div class="panel panel-default">
-        
+
         <div class="panel-heading">Historie
         <button type="button" class="btn btn-default pull-right" data-toggle="modal" data-tooltip="true" data-target="#modalstart" title="Neuer Eintrag" aria-label="NeuerEintrag">
       <i class="glyphicon glyphicon-pencil" aria-hidden="true"></i>
@@ -315,7 +324,7 @@ if ($result = $db->query($result_notes)){
     $rows = $result->fetch_all(MYSQLI_ASSOC);
     foreach ($rows as $row){
       ?>
-            
+
             <div class="col-md-6 notes_top clearfix"><h5> Eingetragen von: <?php  echo $row['name_short'];?> &nbsp;</h5></div>
             <div class="col-md-6 notes_top clearfix"><h5><?php echo $row['date_add'];?></h5> </div>
               <br /><br />
@@ -327,8 +336,8 @@ if ($result = $db->query($result_notes)){
 //Ermittelt die Anzahl der Beiträge
 $result_c = $db->query("SELECT COUNT(*) FROM historie WHERE u_id = '" . $unit_num_id . "'");
 $row = $result_c->fetch_row();
-echo '#: ', $row[0]; 
- 
+echo '#: ', $row[0];
+
 //Berechne alles notwendige für die Blätterfunktion
 $entrysPerPage = 3;                                                             // Artikel pro Seite
 $pages = ceil($row[0]/$entrysPerPage);                                          // Berechne wieviel Seiten
@@ -350,7 +359,7 @@ $db->close();
  ?>                                   </div>
     </div>                            </div>
     </div></div>
-                          
+
 
 <!-- +++++++++++++++++++++++++++Modal++++++++++++++++++++++ -->
 
@@ -365,9 +374,9 @@ $db->close();
       </div>
       <div class="modal-body">
         <div class="container-fluid">
-  
+
 <form class="form-horizontal" data-toggle="validator" role="form" id ="form" name="form" action="send_formdata_neuerKunde2.php" method="POST" >
- 
+
   <div class="form-group">
       <label for="kundnr" class="col-sm-2 control-label">Kundennummer
     <span class="asteriskField">*
@@ -376,8 +385,8 @@ $db->close();
     <div class="col-sm-10">
       <div class="input-group">
        <div class="input-group-addon">
-        <i class="fa fa-hashtag fa-fw"></i> 
-       </div>  
+        <i class="fa fa-hashtag fa-fw"></i>
+       </div>
         <input type="number" class="form-control" name="k_kdnr" id="kundnr" required="" data-required-error="Pflichtfeld" value="<?php echo $k_kdnr; ?>" autofocus="" placeholder="Kundennummer" />
       </div>
 
@@ -387,10 +396,10 @@ $db->close();
       </div></form>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
-        
+
       </div>
     </div>
   </div>
-</div> </div></div>       
+</div> </div></div>
 
                        <?php include 'footer.php' ?>
