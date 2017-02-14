@@ -42,6 +42,21 @@ function insert_new_manufactor() {  //Verwendung in Datei send_formdata_neuer_He
 	('$firma', '$kunr', '$cpm_id', '$strasse', '$plz', '$tel_a', '$tel_b', '$fax', '$email',
       '$notes', '$datek')" or trigger_error("Query Failed! SQL:  $insqDbtb - Error: " . mysqli_error(), E_USER_ERROR);
 }
+// Abfrage Unit welcher Kunde mit Adresse im Jumbotron Dataunitsmall.php START
+function customer_unit_ds($unit_id){
+  global $unit_id, $customer_unit_ds;
+return $customer_unit_ds =("SELECT a.u_id, a.ident_id, b.u_id, b.cs_id, c.cs_id, c.cs_customer_name, c.cs_street,  c.cs_zip, d.ort
+FROM unit a
+JOIN unit_link_customer b
+ON a.u_id = b.u_id
+JOIN customer c
+ON b.cs_id = c.cs_id
+JOIN ort_plz d
+ON c.cs_zip = d.Plz
+WHERE a.u_id = '" . $unit_id  . "' AND a.u_visible = 1 GROUP BY c.cs_customer_name");
+}
+
+
 
 function customer_unit($unit_num_id) {                                            //Funktion in get_ident_nr.php                                                                               //2017310101
   global $customer_unit;                                                        //Abfrage Unit welcher Kunde
