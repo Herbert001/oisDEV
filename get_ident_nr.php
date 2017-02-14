@@ -29,8 +29,8 @@ include 'inc/func/function.php';
   if(isset($_REQUEST['submit'], $_POST['identid']))                             // Abfrage ob Button gedrückt wurde und Variable vorhanden
   {
     $errorMessage = "<br>";
-    $idnr=  clean($_POST['identid']);
-    }else{
+    $idnr=  clean($_POST['identid']);                                           //  $idnr = Übermittelte Anlagenbezeichnung aus Dataunitsmall.php
+    }else{                                                                      // wenn nach Anlagen gesucht wird.
     echo "No way";
     exit;
   }
@@ -55,38 +55,8 @@ include 'inc/func/function.php';
   <div class="container">
   <h1 class="mod1">
 
-
-                                                                       <!-- Erkennung welcher Typ von Anlage! Kälte, Klima, Druckluft, etc.
-                                                                                //Abfrage welche Spalte in unit_link_tab fuer die angegebene u_id
-                                                                                ///belegt ist, damit die Ausgabe je nach unit angepasst werden kann. -->
 <?php
-$query_check =("SELECT a.u_id, b.aircondition, b.aircompressor, b.chiller, b.airdryer
-                     FROM unit AS a
-                     LEFT JOIN unit_link_tab AS b
-                     ON a.u_id = b.aircondition
-                     OR a.u_id = b.aircompressor
-                     OR a.u_id = b.chiller
-                     OR a.u_id = b.airdryer
-                     WHERE a.u_id = '" . $unit_num_id . "' ");             //Erkennung ENDE, sollte die u_id liefern
 
-if ($result = $db->query($query_check)) {                                   //Check ob Daten vorhanden
-    if ($result->num_rows) {                                                //Wenn vorhanden
-        $rows = $result->fetch_all(MYSQLI_ASSOC);                           //Daten holen
-        foreach ($rows as $row) {                                           //Abfrage welche Spalte mit der ID gefüllt ist,
-     if ($row['aircondition'] > NULL){                                      //wenn nicht NULL -> Abfrage und Ausgabe anpassen
-  		$ac_query = 1;
-	}else if($row['aircompressor'] > NULL){
-  		$acr_query = 1;
-	}else if ($row['chiller'] > NULL){
-  		$ch_query = 1;
-	}else if ($row['airdryer'] > NULL){
-  		$ad_query = 1;
-	}else {
-  		$oth_query = 1;
-}
-}}};
-get_unit_data_acr($unit_num_id);                                               //Funktion 2017010201 | hole Anlagendetails
-customer_unit($unit_num_id);                                                  // Funktion 2017310101 | hole Kundendaten
                                                                                 // Abfrage Historie
 $historie =("SELECT a.id, a.u_id, b.u_id, b.date_add, b.notes, b.name_short, d.cat_name
               FROM unit AS a
@@ -99,7 +69,8 @@ $historie =("SELECT a.id, a.u_id, b.u_id, b.date_add, b.notes, b.name_short, d.c
               WHERE a.u_id = '" . $_SESSION['uids'] . "' ORDER BY b.date_add DESC LIMIT 2 ");
                                                                                 // ENDE Historie
 
-
+get_unit_data_acr($unit_num_id);                                               //Funktion 2017010201 | hole Anlagendetails
+customer_unit($unit_num_id);                                                  // Funktion 2017310101 | hole Kundendaten
 if ($result = $db->query($customer_unit)) {                                     //Abfrage Kundendaten
     if ($result->num_rows) {                                                    //Name, Adresse, Ort
         $rows = $result->fetch_all(MYSQLI_ASSOC);
@@ -124,27 +95,23 @@ if ($result = $db->query($customer_unit)) {                                     
                                                    // Setzen der Variablen zur späteren Verwendung
 
 }}else {echo "<h2 class='idshadow'>". $error_no_id. "<br />";}}
-//$db -> close();
+
                                   // Abfrage, Ausgabe wieviele Anlagen sind unter der u_id angelegt -->
                      //get_units($unit_num_id);
-$units = ("SELECT a.u_id, a.ident_id FROM unit a WHERE a.u_id = 4711");
-
-
-
-                   ?> <div class = 'container text-left'>
+$units = ("SELECT a.ident_id, a.u_id FROM unit a WHERE a.u_id = '" . $unit_num_id . "'");
+ ?>
+                   <div class = 'container text-left'>
                         <div class='row' id='lowpadding'>
                             <div class='col-md-4 col-xs-6'> <h4 class='idshadow'> Kundennummer:&nbsp; <?php echo $row['cs_id'];?></h4></div>
                             <div class='col-md-4 col-xs-6'> <h4 class='idshadow' pull-right> Unitnummer:&nbsp; <?php echo $unit_num_id;?></h4></div>
-                       <?php     if ($result = $db->query($units)) {                                     //Abfrage Kundendaten
-                        if ($result->num_rows) {                                                    //Name, Adresse, Ort
-                         $rows = $result->fetch_all(MYSQLI_ASSOC);
+                            <div class='col-md-4 col-xs-12'> <h4 class='idshadow' pull-right> IdentifikationsID:&nbsp <br />
+<?php                   if ($result = $db->query($units)) {                      //Abfrage wieviele Units sind unter der u_id gespeichert
+                          if ($result->num_rows) {
+                          $rows = $result->fetch_all(MYSQLI_BOTH);
                            foreach ($rows as $row) {                           // Ausgabe units in Schleife da mehrere vorhanden sein können
-                            ?>
-                            <div class='col-md-4 col-xs-12'> <h4 class='idshadow' pull-right> IdentifikationsID:&nbsp; <?php echo $row['ident_id'];?></h4></div>
-                        </div></div>
-<?php
-                        }}else { echo "Keine Daten";}}
-
+                             echo $row[0] ."<br />";
+                           }}else { echo "Keine Daten";}}
+                                    echo "</div></div></div>";
 
 if ($result = $db->query($get_unit_data_acr)) {                                     //Abfrage Anlagendetails
     if ($result->num_rows >=1) {                                                    //Typ, Sernr etc
@@ -175,6 +142,12 @@ if (!empty ($unit_num_id)){
   echo " ID nicht gesetzt, Rest kann abgebrochen werden";
   exit;
 }
+$queryAnlagentyp = ("SELECT ident_id, typ_id, typ_auswahl FROM `unit`
+JOIN unittypen b ON typ_id = b.id WHERE ident_id = '" . $idnr . "'");           // Abfrage welcher Typ ist die Anlage Kompressor, Klima...
+if ($result = $db->query($queryAnlagentyp)) {                                     //Abfrage Anlagendetails
+    if ($result->num_rows) {                                                    //Typ, Sernr etc
+        $rows = $result->fetch_all(MYSQLI_ASSOC);
+        foreach ($rows as $row){
 ?>
 <div class= "container">
 <div class= "row">
@@ -182,8 +155,19 @@ if (!empty ($unit_num_id)){
    <div class="panel panel-success paneltop">
      <div class="panel-heading">Anlagendaten<br /><h4 class="panel-title">short facts</h4>
      </div>
-
+    <div class="center-with-box"> <?php echo $row['typ_auswahl'];}}}?> </div>
         <ul class="list-group">
+            <li class="list-group-item"><i class="fa fa-building-o fa-fw" aria-hidden="true"></i>&nbsp;Identifikationsnummer:  <div class=pull-right>
+                    <!-- Ausgabe und Prüfung Hersteller Anfang -->
+                    <?php
+                    if ($idnr != NULL) {
+                        echo $idnr;
+                    } else {
+                        echo 'NO DATA AVAILABLE';
+                    }
+                    ?> </div>
+                    <!-- Ausgabe und Prüfung Hersteller Ende -->
+            </li>
             <li class="list-group-item"><i class="fa fa-building-o fa-fw" aria-hidden="true"></i>&nbsp;Hersteller:<div class=pull-right>
                     <!-- Ausgabe und Prüfung Hersteller Anfang -->
                     <?php
