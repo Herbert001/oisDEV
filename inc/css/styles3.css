@@ -100,6 +100,16 @@ body {
     text-align: center;
 }
 
+.center-with-box {
+    text-align: center;
+    background-color: #999;
+    color: #F9F2FA;
+    border-style: solid;
+    border-color: #050505;
+    font-size: 14px;
+
+}
+
 .bgimage {
     background-image: url(../img/sky.jpg);
     background-size: 100%;
@@ -144,14 +154,13 @@ h5.hist {
     padding: 1px;
 }
 .panel {
-
     padding:10px;
-    margin-bottom: @line-height-computed;
-    background-color: @panel-bg;
     border: 0.5px solid ;
-    border-radius: @panel-border-radius;
-    .box-shadow(0 1px 1px rgba(200,0,0,0.2));
+    box-shadow: 0 0 1px 1px rgba(200,0,0, .2);
 }
+
+
+
 .panel-height {
     max-height: 450px;
     overflow-y: scroll;
@@ -210,4 +219,7 @@ h5.hist {
     padding-left: 30px;
     font-size: 10px;
     color:#D5DBE3;
+}
+#ausgabeText{
+    display: none;
 }
