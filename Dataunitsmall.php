@@ -2,7 +2,7 @@
 session_start();
 if (empty($_SESSION['usr_id'])) {
                        header("Location: index.php?uid=". $_SESSION['uids'] ."");
-                       exit; 
+                       exit;
                        }else
                            {
                             //echo "stringjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj";
@@ -24,20 +24,21 @@ if (empty($_SESSION['usr_id'])) {
 
 
 <?php
-  include 'header2.php';//require 'connectdb.php';Connect ist im header2.php
-?>        
-            
+include 'header2.php';//require 'connectdb.php';Connect ist im header2.php
+include 'inc/func/function.php';
+?>
+
 <div class="jumbotron text-left">
     <div class="container">
         <h1 class="mod1">
             <?php
             if (isset($_SESSION['uids'])) {
-                 $_SESSION['uids'];
+                 $unit_id = $_SESSION['uids'];
                  $_SESSION['usr_name'];
             } else {
-                echo ("<h2 class=shadow> Es wurde keine Anlagennummer übergeben! <br><br><br><br></h2>");  
+                echo ("<h2 class=shadow> Es wurde keine Anlagennummer übergeben! <br><br><br><br></h2>");
             ?>
-<form class="form-horizontal" data-toggle="validator" role="form" id ="form" name="form" action="get_ident_nr.php" method="POST" >    
+<form class="form-horizontal" data-toggle="validator" role="form" id ="form" name="form" action="get_ident_nr.php" method="POST" >
   <div class='form-group'>
     <label for='contact' class='col-sm-2 control-label'></label>
       <div class='col-sm-4'>
@@ -51,34 +52,30 @@ if (empty($_SESSION['usr_id'])) {
 <button type="submit" name="submit" id="submit" class="btn btn-outline-primary">Give it to me</button>
   </div>
 </form>
-    </div> <?php } ?>                      
+    </div> <?php } ?>
                                                                                <!-- Erkennung welcher Typ von Anlage! Kälte, Klima, Druckluft, etc.
                                                                                 //Abfrage welche Spalte in unit_link_tab fuer die angegebene u_id
                                                                                 ///belegt ist, damit die Ausgabe je nach unit angepasst werden kann. -->
-<?php 
-$query_check =("SELECT a.u_id, b.aircondition, b.aircompressor, b.chiller, b.airdryer 
-                     FROM unit AS a                                             
+<?php
+$query_check =("SELECT a.u_id, b.aircondition, b.aircompressor, b.chiller, b.airdryer
+                     FROM unit AS a
                      LEFT JOIN unit_link_tab AS b
                      ON a.u_id = b.aircondition
                      OR a.u_id = b.aircompressor
                      OR a.u_id = b.chiller
                      OR a.u_id = b.airdryer
                      WHERE a.u_id = '" . $_SESSION['uids'] . "' ");             //Erkennung ENDE, sollte die u_id liefern
-                                  
-                                                                                // Abfrage Unit welcher Kunde START
-$customer_unit =("SELECT a.u_id, a.ident_id, b.u_id, b.cs_id, c.cs_id, c.cs_customer_name, c.cs_street, c.cs_zip, d.ort
-FROM unit a                                                                     
-JOIN unit_link_customer b
-ON a.u_id = b.u_id
-JOIN customer c 
-ON b.cs_id = c.cs_id
-JOIN ort_plz d
-ON c.cs_zip = d.Plz
-WHERE a.u_id = '" . $_SESSION['uids'] . "' ");                                  // Abfrage ENDE
-                                                
-                                                                                // Abfrage Historie
+
+
+// Abfrage Ende
+
+// Abfrage welche Identifikationsnummer(n) gehören zu der u_id Ausgabe im Jumbotron
+$idsFromUnit = ("SELECT a.u_id, a.ident_id
+FROM unit a
+WHERE a.u_id = '" . $_SESSION['uids'] . "' AND a.u_visible = 1");
+                                                                           // Abfrage Historie
 $historie =("SELECT a.id, a.u_id, b.u_id, b.date_add, b.notes, b.name_short, d.cat_name
-              FROM unit AS a 
+              FROM unit AS a
               LEFT JOIN historie AS b
               ON a.u_id = b.u_id
               LEFT JOIN user AS c
@@ -88,8 +85,8 @@ $historie =("SELECT a.id, a.u_id, b.u_id, b.date_add, b.notes, b.name_short, d.c
               WHERE a.u_id = '" . $_SESSION['uids'] . "' ORDER BY b.date_add DESC LIMIT 2 ");
                                                                                 // ENDE Historie
 
-
-if ($result = $db->query($customer_unit)) {                 //Ausgabe Kundendaten
+customer_unit_ds($unit_id);
+if ($result = $db->query($customer_unit_ds)) {                 //Ausgabe Kundendaten
     if ($result->num_rows) {                                //Name, Adresse, Ort
         $rows = $result->fetch_all(MYSQLI_ASSOC);
         foreach ($rows as $row) {
@@ -97,15 +94,32 @@ if ($result = $db->query($customer_unit)) {                 //Ausgabe Kundendate
             echo "<h4 class='idshadow'>". $row['cs_street'] . "<br />";
             echo "<h4 class='idshadow'>". $row['cs_zip']. "&nbsp" . $row['ort'] ;
             echo "<br />" . "<br />" . "<br /> </div>";
-            echo "<div class = 'container text-left'>"; 
+            echo "<div class = 'container text-left'>";
             echo "<div class='row'>";
             echo "<div class='col-md-4 col-xs-6'> <h4 class='idshadow'> Kundennummer:&nbsp" .$row['cs_id'] . "</div>";
             echo "<div class='col-md-4 col-xs-6'> <h4 class='idshadow pull-right'>Unitnummer: " . $_SESSION['uids']. "</div>";
-            echo "<div class='col-md-4 col-xs-6'> <h4 class='idshadow pull-right'>IdentifikationsID: " . $row['ident_id']. "</div>";
-            echo "</div> </div>";
-}}}?> 
-</div>    
-    
+            //
+  }
+        }else{
+            echo "<h2 class='idshadow'> Keine Daten verfügbar! </h2>";
+}}
+//Ausgabe Identifikationsnummer(n) die zu der UnitID gehören
+echo "<div class='col-md-4 col-xs-6'> <h4 class='idshadow pull-right'>IdentifikationsID: <br />";
+
+if ($result = $db->query($idsFromUnit)) {
+  if ($result->num_rows) {
+       $rows = $result->fetch_all(MYSQLI_ASSOC);
+        foreach ($rows as $row) {
+          echo  "&nbsp" .$row['ident_id']. "<br />";
+}}
+else{
+  echo "<h2 class='idshadow'> Keine Daten verfügbar! </h2>";
+    }
+}
+          echo "</div> </div> </div>";
+?>
+</div>
+
 <div class= "container">
 <div class= "row">
     <div class="col-md-5">
@@ -114,7 +128,7 @@ if ($result = $db->query($customer_unit)) {                 //Ausgabe Kundendate
             </div>
 
             <ul class="list-group">
-                <li class="list-group-item"><i class="fa fa-building-o fa-fw" aria-hidden="true"></i>&nbsp;Hersteller:<div class=pull-right> 
+                <li class="list-group-item"><i class="fa fa-building-o fa-fw" aria-hidden="true"></i>&nbsp;Hersteller:<div class=pull-right>
                         <!-- Ausgabe und Prüfung Hersteller Anfang -->
                         <?php
                         if ($row['name'] != NULL) {
@@ -137,7 +151,7 @@ if ($result = $db->query($customer_unit)) {                 //Ausgabe Kundendate
                                                     <!-- Ausgabe und Prüfung Typ Ende -->
                                             </li>
 
-                                            <li class="list-group-item"><i class="fa fa-hashtag fa-fw" aria-hidden="true"></i>&nbsp;Ser. Nr.:<div class=pull-right> 
+                                            <li class="list-group-item"><i class="fa fa-hashtag fa-fw" aria-hidden="true"></i>&nbsp;Ser. Nr.:<div class=pull-right>
                                                     <!-- Ausgabe und Prüfung Seriennummer Anfang -->
                                                     <?php
                                                     if ($row['u_serial'] != NULL) {
@@ -182,7 +196,7 @@ if ($result = $db->query($customer_unit)) {                 //Ausgabe Kundendate
                                                     ?></div>
                                                     <!-- Prüfung und Ausgabe KM- Menge ENDE -->
                                             </li>
-                                            <li class="list-group-item"><i class="fa fa-cogs fa-fw" aria-hidden="true"></i>&nbsp;Kälteleistung:<div class=pull-right> 
+                                            <li class="list-group-item"><i class="fa fa-cogs fa-fw" aria-hidden="true"></i>&nbsp;Kälteleistung:<div class=pull-right>
                                                     <!-- Prüfung und Ausgabe Kälteleistung ANFANG -->
                                                     <?php
                                                     if ($row['u_capacity'] != NULL) {
@@ -232,8 +246,8 @@ if ($result = $db->query($customer_unit)) {                 //Ausgabe Kundendate
                                         </ul>
                                     </div>
                                 </div>
-                                
-                                                               
+
+
 
                                 <div class="col-md-offset-1 col-md-6">
                                     <div class="panel panel-default">
@@ -243,12 +257,12 @@ if ($result = $db->query($customer_unit)) {                 //Ausgabe Kundendate
  /***********************
  * Ausgabe der Einträge
  ***********************/
- 
+
 //Ermittelt die Anzahl der Beiträge
 $result_c = $db->query("SELECT COUNT(*) FROM historie WHERE u_id = '" . $_SESSION['uids'] . "'");
 $row = $result_c->fetch_row();
-echo '#: ', $row[0]; 
- 
+echo '#: ', $row[0];
+
 //Berechne alles notwendige für die Blätterfunktion
 $entrysPerPage = 3;                                                             // Artikel pro Seite
 $pages = ceil($row[0]/$entrysPerPage);                                          // Berechne wieviel Seiten
@@ -271,6 +285,6 @@ $db->close();
                                 </div>
 
                             </div>
-                        </div>          
+                        </div>
 
                        <?php include 'footer.php' ?>
