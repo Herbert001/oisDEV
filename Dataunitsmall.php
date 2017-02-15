@@ -32,13 +32,17 @@ include 'inc/func/function.php';
     <div class="container">
         <h1 class="mod1">
             <?php
+            $errorMessage1 = "Variable gesetzt";
             if (isset($_SESSION['uids'])) {
                  $unit_id = $_SESSION['uids'];
                  $_SESSION['usr_name'];
             } else {
-                echo ("<h2 class=shadow> Es wurde keine Anlagennummer übergeben! <br><br><br><br></h2>");
+                echo ("<h2 class='shadow'> Es wurde keine Anlagennummer übergeben! <br><br><br><br></h2>");
+                echo "<div id= 'errorhandler'>KLOKKKK</div>";
+
+
             ?>
-<form class="form-horizontal" data-toggle="validator" role="form" id ="form" name="form" action="get_ident_nr.php" method="POST" >
+<form class="form-horizontal" data-toggle="validator" role="form" id ="form" name="form" action="get_ident_nr.php" method="GET" >
   <div class='form-group'>
     <label for='contact' class='col-sm-2 control-label'></label>
       <div class='col-sm-4'>
@@ -52,28 +56,17 @@ include 'inc/func/function.php';
 <button type="submit" name="submit" id="submit" class="btn btn-outline-primary">Give it to me</button>
   </div>
 </form>
-    </div> <?php } ?>
-                                                                               <!-- Erkennung welcher Typ von Anlage! Kälte, Klima, Druckluft, etc.
-                                                                                //Abfrage welche Spalte in unit_link_tab fuer die angegebene u_id
-                                                                                ///belegt ist, damit die Ausgabe je nach unit angepasst werden kann. -->
-<?php
-$query_check =("SELECT a.u_id, b.aircondition, b.aircompressor, b.chiller, b.airdryer
-                     FROM unit AS a
-                     LEFT JOIN unit_link_tab AS b
-                     ON a.u_id = b.aircondition
-                     OR a.u_id = b.aircompressor
-                     OR a.u_id = b.chiller
-                     OR a.u_id = b.airdryer
-                     WHERE a.u_id = '" . $_SESSION['uids'] . "' ");             //Erkennung ENDE, sollte die u_id liefern
+    </div> <?php }
 
 
-// Abfrage Ende
 
 // Abfrage welche Identifikationsnummer(n) gehören zu der u_id Ausgabe im Jumbotron
-$idsFromUnit = ("SELECT a.u_id, a.ident_id
+$idsFromUnit = ("SELECT a.id, a.u_id, a.ident_id, a.typ_id
 FROM unit a
 WHERE a.u_id = '" . $_SESSION['uids'] . "' AND a.u_visible = 1");
-                                                                           // Abfrage Historie
+
+
+// Abfrage Historie
 $historie =("SELECT a.id, a.u_id, b.u_id, b.date_add, b.notes, b.name_short, d.cat_name
               FROM unit AS a
               LEFT JOIN historie AS b
@@ -86,8 +79,8 @@ $historie =("SELECT a.id, a.u_id, b.u_id, b.date_add, b.notes, b.name_short, d.c
                                                                                 // ENDE Historie
 
 customer_unit_ds($unit_id);
-if ($result = $db->query($customer_unit_ds)) {                 //Ausgabe Kundendaten
-    if ($result->num_rows) {                                //Name, Adresse, Ort
+if ($result = $db->query($customer_unit_ds)) {                                  //Ausgabe Kundendaten im Jumbotron
+    if ($result->num_rows) {                                                    //Name, Adresse, Ort
         $rows = $result->fetch_all(MYSQLI_ASSOC);
         foreach ($rows as $row) {
             echo "<h2 class='idshadow'>". $row['cs_customer_name'] . "<br />" ;
@@ -98,28 +91,81 @@ if ($result = $db->query($customer_unit_ds)) {                 //Ausgabe Kundend
             echo "<div class='row'>";
             echo "<div class='col-md-4 col-xs-6'> <h4 class='idshadow'> Kundennummer:&nbsp" .$row['cs_id'] . "</div>";
             echo "<div class='col-md-4 col-xs-6'> <h4 class='idshadow pull-right'>Unitnummer: " . $_SESSION['uids']. "</div>";
-            //
-  }
-        }else{
-            echo "<h2 class='idshadow'> Keine Daten verfügbar! </h2>";
-}}
-//Ausgabe Identifikationsnummer(n) die zu der UnitID gehören
-echo "<div class='col-md-4 col-xs-6'> <h4 class='idshadow pull-right'>IdentifikationsID: <br />";
+            echo "<div class='col-md-4 col-xs-6'> <h4 class='idshadow pull-right'>IdentifikationsID: " ."<br />";}
+        }}
 
-if ($result = $db->query($idsFromUnit)) {
-  if ($result->num_rows) {
-       $rows = $result->fetch_all(MYSQLI_ASSOC);
-        foreach ($rows as $row) {
-          echo  "&nbsp" .$row['ident_id']. "<br />";
-}}
-else{
-  echo "<h2 class='idshadow'> Keine Daten verfügbar! </h2>";
-    }
-}
-          echo "</div> </div> </div>";
-?>
+        if ($result = $db->query($idsFromUnit)) {
+          if ($result->num_rows) {
+          $rows = $result->fetch_all(MYSQLI_ASSOC);
+            foreach ($rows as $row) {
+            echo  "&nbsp <a href='/get_ident_nr.php?identid=" .$row['ident_id']."&submit=' >" .$row['ident_id']. "</a><br />";  //Ausgabe der IDs auf der rechten Seite im Jumbotron
+            }}
+}?>
+</div><br />
+</div> </div> </div>
+
 </div>
+<?php
+/*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Bestimmung was für ein Typ von Anlage und demnach Abfragequery und Ausgabe der Daten bestimmen
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 
+switch ($row['typ_id']) {
+    case 1:
+        echo "i ist gleich Kälteanlage";
+        break;
+    case 2:
+        echo "i ist Druckluftkompressor Schraube";
+        break;
+    case 3:
+        echo "i ist Klimaanlage AG";
+        break;
+    case 4:
+        echo "i ist Klimaanlage IG";
+        break;
+    case 5:
+        echo "i ist Druckluftkompressor Hubkolben";
+        break;
+    case 6:
+        echo "i ist Drucklufttrockner";
+        break;
+    case 7:
+        echo "i ist Kaltwassersatz";
+        // Abfrage Details wenn Chiller
+        $get_chiller =("SELECT a.ident_id, a.lastService AS Wartung, b.uIdentId, c.c_typ_id, c.c_sernr AS Seriennummer, c.c_build_year AS Baujahr,
+          c.c_vdkf AS VDKF, d.id, d.c_description AS
+          Bezeichnung, d.c_manufactor_nr,
+          d.c_fr_load AS FMenge, d.c_power AS KLeistung, e.name AS Hersteller, f.fr_name AS Frigen
+        FROM unit a JOIN unit_link_tab b ON a.ident_id = b.uIdentId
+        JOIN chiller c ON c.id = b.cIdentId
+        JOIN chiller_typ d ON c.c_typ_id = d.id
+        JOIN manufactor e ON d.c_manufactor_id = e.id
+        JOIN frigen f ON d.c_fr_id = f.fr_id
+        WHERE a.ident_id = 'WM-NI2-1004'");
+        if ($result = $db->query($get_chiller)) {
+          if ($result->num_rows) {
+          $rows = $result->fetch_all(MYSQLI_ASSOC);
+            foreach ($rows as $row) {
+              $bezeichnung     = $row['Bezeichnung'];
+              $hersteller     = $row['Hersteller'];
+              $seriennr       = $row['Seriennummer'];
+              $baujahr        = $row['Baujahr'];
+              $frigen         = $row['Frigen'];
+              $fuellmenge     = $row['FMenge'];
+              $kaelteleistung = $row['KLeistung'];
+              $lastmaintenance= $row['Wartung'];
+              $vdkf           = $row['VDKF'];
+
+
+        }}};
+        break;
+    case 5:
+        echo "i ist Lüftungsanlage";
+        break;
+}
+
+
+?>
 <div class= "container">
 <div class= "row">
     <div class="col-md-5">
@@ -131,8 +177,8 @@ else{
                 <li class="list-group-item"><i class="fa fa-building-o fa-fw" aria-hidden="true"></i>&nbsp;Hersteller:<div class=pull-right>
                         <!-- Ausgabe und Prüfung Hersteller Anfang -->
                         <?php
-                        if ($row['name'] != NULL) {
-                            echo $row['name'];
+                        if ($hersteller != NULL) {
+                            echo $hersteller;
                         } else {
                             echo 'NO DATA AVAILABLE';
                         }
@@ -142,8 +188,8 @@ else{
                                             <li class="list-group-item"><i class="fa fa-wpforms fa-fw" aria-hidden="true"></i>&nbsp;Typ:<div class=pull-right>
                                                     <!-- Ausgabe und Prüfung Typ Anfang -->
                                                     <?php
-                                                    if ($row['t_typ'] != NULL) {
-                                                        echo $row['t_typ'];
+                                                    if ($bezeichnung != NULL) {
+                                                        echo $bezeichnung;
                                                     } else {
                                                         echo 'NO DATA AVAILABLE';
                                                     }
@@ -154,8 +200,8 @@ else{
                                             <li class="list-group-item"><i class="fa fa-hashtag fa-fw" aria-hidden="true"></i>&nbsp;Ser. Nr.:<div class=pull-right>
                                                     <!-- Ausgabe und Prüfung Seriennummer Anfang -->
                                                     <?php
-                                                    if ($row['u_serial'] != NULL) {
-                                                        echo $row['u_serial'];
+                                                    if ($seriennr != NULL) {
+                                                        echo $seriennr;
                                                     } else {
                                                         echo 'NO DATA AVAILABLE';
                                                     }
@@ -166,8 +212,8 @@ else{
                                             <li class="list-group-item"><i class="fa fa-calendar-o fa-fw" aria-hidden="true"></i>&nbsp;Baujahr:<div class=pull-right>
                                                     <!-- Ausgabe und Prüfung Baujahr Anfang -->
                                                     <?php
-                                                    if ($row['u_year'] != NULL) {
-                                                        echo $row['u_year'];
+                                                    if ($baujahr) {
+                                                        echo $baujahr;
                                                     } else {
                                                         echo 'NO DATA AVAILABLE';
                                                     }
@@ -177,8 +223,8 @@ else{
                                             <li class="list-group-item"><i class="fa fa-bitbucket fa-fw" aria-hidden="true"></i>&nbsp;Kältemittel:<div class=pull-right>
                                                     <!-- Ausgabe und Prüfung Kältemittelbezeichung Anfang -->
                                                     <?php
-                                                    if ($row['fr_name'] != NULL) {
-                                                        echo $row['fr_name'];
+                                                    if ($frigen != NULL) {
+                                                        echo $frigen;
                                                     } else {
                                                         echo 'NO DATA AVAILABLE';
                                                     }
@@ -188,8 +234,8 @@ else{
                                             <li class="list-group-item"><i class="fa fa-balance-scale fa-fw" aria-hidden="true"></i>&nbsp;Füllmenge:<div class=pull-right>
                                                     <!-- Prüfung und Ausgabe KM- Menge ANFANG -->
                                                     <?php
-                                                    if ($row['u_fr_load'] != NULL) {
-                                                        echo $row['u_fr_load'];
+                                                    if ($fuellmenge != NULL) {
+                                                        echo $fuellmenge;
                                                     } else {
                                                         echo 'NO DATA AVAILABLE';
                                                     }
@@ -199,8 +245,8 @@ else{
                                             <li class="list-group-item"><i class="fa fa-cogs fa-fw" aria-hidden="true"></i>&nbsp;Kälteleistung:<div class=pull-right>
                                                     <!-- Prüfung und Ausgabe Kälteleistung ANFANG -->
                                                     <?php
-                                                    if ($row['u_capacity'] != NULL) {
-                                                        echo $row['u_capacity'];
+                                                    if ($kaelteleistung != NULL) {
+                                                        echo $kaelteleistung;
                                                     } else {
                                                         echo 'NO DATA AVAILABLE';
                                                     }
@@ -210,8 +256,8 @@ else{
                                             <li class="list-group-item"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>&nbsp;VDKF:<div class=pull-right>
                                                     <!-- Prüfung und Ausgabe VDKF ANFANG -->
                                                     <?php
-                                                    if ($row['u_vdkfnr'] != NULL) {
-                                                        echo $row['u_vdkfnr'];
+                                                    if ($vdkf != NULL) {
+                                                        echo $vdkf;
                                                     } else {
                                                         echo 'NO DATA AVAILABLE';
                                                     }
@@ -221,8 +267,8 @@ else{
                                             <li class="list-group-item"><i class="fa fa-file-text-o fa-fw" aria-hidden="true"></i>&nbsp;Wartungsvertrag:<div class=pull-right>
                                                     <!-- Prüfung und Ausgabe Wartungsvertrag ANFANG -->
                                                     <?php
-                                                    if ($row['u_contract'] != NULL) {
-                                                        echo $row['u_contract'];
+                                                    if ($lastmaintenance!= NULL) {
+                                                        echo $lastmaintenance;
                                                     } else {
 
                                                         echo "<span class='glyphicon glyphicon-remove'></span>";
@@ -233,8 +279,8 @@ else{
                                             <li class="list-group-item"><i class="fa fa-industry fa-fw" aria-hidden="true"></i>&nbsp;Letzte Wartung:<div class=pull-right>
                                                     <!-- Prüfung und Ausgabe Letzte Wartung ANFANG -->
                                                     <?php
-                                                    if ($row['c_last_maintenance'] != NULL) {
-                                                        echo $row['c_last_maintenance'];
+                                                    if ($lastmaintenance != NULL) {
+                                                        echo $$lastmaintenance;
                                                     } else {
 
                                                         echo "<span class='glyphicon glyphicon-remove'></span>";
@@ -253,6 +299,7 @@ else{
                                     <div class="panel panel-default">
                                         <div class="panel-heading">Historie</div>
                                         <div class="panel-body panel-height">
+
 <?php
  /***********************
  * Ausgabe der Einträge
