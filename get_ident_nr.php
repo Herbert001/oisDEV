@@ -109,7 +109,7 @@ $units = ("SELECT a.ident_id, a.u_id FROM unit a WHERE a.u_id = '" . $unit_num_i
                           if ($result->num_rows) {
                           $rows = $result->fetch_all(MYSQLI_BOTH);
                            foreach ($rows as $row) {                           // Ausgabe units in Schleife da mehrere vorhanden sein können
-                             echo "&nbsp <a href='/get_ident_nr.php?identid=" .$row['0'] ."&submit=' >" .$row['0']."</a><br />";
+                             echo "&nbsp <a class='linkjumbo' href='/get_ident_nr.php?identid=" .$row['0'] ."&submit=' >" .$row['0']."</a><br />";
                            }}else { echo "Keine Daten";}}
                                     echo "</div></div></div>";
 
