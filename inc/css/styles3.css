@@ -171,8 +171,8 @@ h5.hist {
     padding: 8px 10px;
 }
 a.linkjumbo:link, :visited {
-    background-color: #ccccff
-        border: darkorange;
+    background-color: #ccccff;
+    border: darkorange;
     border-style: double;
     text-decoration: none;
     font-size: 19px;
