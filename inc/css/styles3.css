@@ -170,6 +170,19 @@ h5.hist {
 .list-group-item {
     padding: 8px 10px;
 }
+a.linkjumbo:link, :visited {
+    background-color: #ccccff
+        border: darkorange;
+    border-style: double;
+    text-decoration: none;
+    font-size: 19px;
+    padding: 0px;
+    margin: 0px;
+    color : #D5DBE3;
+    line-height: 1.6;
+    text-shadow: 3px 3px 2px #26414A;
+
+}
 .loginbox {
     margin-top: 40px;
     padding: 30px;
