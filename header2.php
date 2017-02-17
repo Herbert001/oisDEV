@@ -13,13 +13,13 @@
                    OnlineUnitInformationSystem
                    <div class = "text-info">v. ALPHA070216 &copyKarsten Kluge</div>
                </div>
-               
+
                </div>
                     <!-- Menu -->
                     <div class = "collapse navbar-collapse" id = "mainNavbar">
                         <ul class = "nav navbar-nav navbar-right">
                             <li class ="dropdown">
-                                <a href="#" class = "dropdown-toggle" data-toggle= "dropdown">Kunden 
+                                <a href="#" class = "dropdown-toggle" data-toggle= "dropdown">Kunden
                                     <spawn class= "caret"</spawn></a>
                                      <ul class="dropdown-menu">
                                          <li><a href = "Kunde_add2.php">Kunden anlegen</a></li>
@@ -30,7 +30,7 @@
                             </li>
 
                             <li class ="dropdown">
-                                <a href="#" class = "dropdown-toggle" data-toggle= "dropdown">Anlagen 
+                                <a href="#" class = "dropdown-toggle" data-toggle= "dropdown">Anlagen
                                     <spawn class= "caret"</spawn></a>
                                      <ul class="dropdown-menu">
                                          <li><a href = "addunit_1.php">Anlagen anlegen</a></li>
@@ -41,7 +41,7 @@
                             </li>
 
                             <li class ="dropdown">
-                                <a href="#" class = "dropdown-toggle" data-toggle= "dropdown">Hersteller 
+                                <a href="#" class = "dropdown-toggle" data-toggle= "dropdown">Hersteller
                                     <spawn class= "caret"</spawn></a>
                                      <ul class="dropdown-menu">
                                         <li><a href = "Hersteller_add.php">Hersteller anlegen</a></li>
@@ -52,7 +52,7 @@
                             </li>
 
                             <li class ="dropdown">
-                                <a href="#" class = "dropdown-toggle" data-toggle= "dropdown">Kontaktperson 
+                                <a href="#" class = "dropdown-toggle" data-toggle= "dropdown">Kontaktperson
                                     <spawn class= "caret"</spawn></a>
                                      <ul class="dropdown-menu">
                                         <li class="dropdown-header">Kontakt Hersteller</li>
@@ -72,7 +72,7 @@
                             <!--DropdownMenu -->
                             <li class = "dropdown">
                                 <span>  <p class="navbar-btn">
-                                    <a href="logout.php" class="btn btn-danger btn-sm navbar-btn">LOGOUT</a>
+                                    <a class="btn btn-danger btn-sm navbar-btn" href="logout.php" >LOGOUT</a>
                                     &nbsp;
                                     </p>
                                 </span>
@@ -83,17 +83,17 @@
                                     <li><a href="#">Kontaktdaten</a></li>
                                 </ul>-->
                             </li>
-                        </ul> 
+                        </ul>
                     </div>
             </div>
         </nav>
     <script>
       $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip({ 
+        $('[data-toggle="tooltip"]').tooltip({
           placement : "auto",
           animation: "true",
           delay: {show:200, hide:700}
     });
  });
    </script>
-        
+
