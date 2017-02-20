@@ -143,7 +143,14 @@ if ($result = $db->query($get_unit_data_acr)) {                                 
         foreach ($rows as $row){ 
    }}else{
 echo "<h2 class='idshadow'>Fehler Datenbankabfrage <br />";}}
-       
+/* Einfügen in css datei
+ * h5.btn-unit {
+ *   color: black;
+  *  font-weight: bold;
+   * margin-top: 0px;
+    *margin: 13px;
+*}
+ */       
 
 ?>
 </div>       
