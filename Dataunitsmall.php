@@ -35,8 +35,8 @@ include 'inc/func/function.php';
        $unit_id = $_SESSION['uids'];
        $_SESSION['usr_name'];
     } else {
-        echo ("<h2 class='shadow'> Es wurde keine Anlagennummer übergeben! <br><br><br><br></h2>");
-        echo "<div id= 'errorhandler'>KLOKKKK</div>";
+        echo ("<h2 class='shadow'> Es wurde keine Anlagennummer übergeben! <br><br></h2>");
+
 ?>
 <form class="form-horizontal" data-toggle="validator" role="form" id ="form" name="form" action="get_ident_nr.php" method="GET" >
   <div class='form-group'>
@@ -54,6 +54,8 @@ include 'inc/func/function.php';
 </form>
     </div>
 <?php }
+exit;
+
 // Abfrage Historie
 $historie =("SELECT a.id, a.u_id, b.u_id, b.date_add, b.notes, b.name_short, d.cat_name
               FROM unit AS a
@@ -78,9 +80,9 @@ if ($result = $db->query($customer_unit_ds)) {                                  
             echo "<div class = 'container text-left'>";
             echo "<div class='row'>";
             echo "<div class='col-md-4 col-xs-6'> <h4 class='idshadow'> Kundennummer:&nbsp" .$row['cs_id'] . "</div>";
-            echo "<div class='col-md-4 col-xs-6'> <h4 class='idshadow pull-right'>Unitnummer: " . $_SESSION['uids']. "</div>";
-            echo "<div class='col-md-4 col-xs-6'> <h4 class='idshadow pull-right'>IdentifikationsID: " ."<br />";}
-        }}
+            echo "<div class='col-md-4 col-xs-6'> <h4 class='idshadow pull-right'>Unitnummer: " . $_SESSION['uids']. "</div>";}}}
+            echo "<div class='col-md-4 col-xs-6'> <h4 class='idshadow pull-right'>IdentifikationsID: " ."</h4></div>";
+
 // Abfrage welche Identifikationsnummer(n) gehören zu der u_id Ausgabe im Jumbotron
 $idsFromUnit = ("SELECT a.id, a.u_id, a.ident_id AS ID, a.typ_id FROM unit a
 WHERE a.u_id = '" . $_SESSION['uids'] . "' AND a.u_visible = 1");
@@ -89,7 +91,7 @@ if ($result = $db->query($idsFromUnit)) {
   $rows = $result->fetch_all(MYSQLI_ASSOC);
     foreach ($rows as $row) {
       $anlagenID = $row['ID'];
-      echo  "&nbsp <a class='linkjumbo' href='/get_ident_nr.php?identid=" .$row['ID']."&submit=' >" .$row['ID']. "</a><br />";  //Ausgabe der IDs auf der rechten Seite im Jumbotron
+      echo  "&nbsp <a class='btn btn-default mine pull-right href='/get_ident_nr.php?identid=" .$row['ID']."&submit=' >" .$row['ID']. "</a><br/><br />";  //Ausgabe der IDs auf der rechten Seite im Jumbotron
       }}
 }?>
 </div><br />
@@ -155,13 +157,13 @@ switch ($row['typ_id']) {
           if ($result->num_rows) {
           $rows = $result->fetch_all(MYSQLI_ASSOC);
             foreach ($rows as $row) {
-              .$bezeichnung         = $row['Bezeichnung'];
-              .$hersteller          = $row['Hersteller'];
-              .$seriennr            = $row['Seriennummer'];
-              .$baujahr             = $row['Baujahr'];
-              .$frigen              = $row['Frigen'];
-              .$fuellmenge          = $row['FMenge'];
-              .$leistung            = $row['Leistung'];
+              $bezeichnung         = $row['Bezeichnung'];
+              $hersteller          = $row['Hersteller'];
+              $seriennr            = $row['Seriennummer'];
+              $baujahr             = $row['Baujahr'];
+              $frigen              = $row['Frigen'];
+              $fuellmenge          = $row['FMenge'];
+              $leistung            = $row['Leistung'];
               $lastmaintenance      = $row['Wartung'];
               $maintenance_contract = $row['Wartungsvertrag'];
 

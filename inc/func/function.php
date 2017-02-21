@@ -135,7 +135,6 @@ function selectTyp() {                                                          
 
 function istvorhd($var_query) {
   global $var_query;
-  if (isset($var_query))
-    ;
+  if (isset($var_query));
   return TRUE;
 }

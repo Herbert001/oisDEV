@@ -66,7 +66,7 @@ body {
 .jumbotron .mod1 {
     color: #D5DBE3;
     text-shadow: 3px 3px 10px #518494;
-    margin-top:40px;
+    margin-top:15px;
     font-family: 'Montserrat', sans-serif;
     font-size : 35px;
 }
@@ -127,7 +127,38 @@ h2.shadow {
     color : #fa0000 !important;
     text-shadow: 3px 3px 2px #000;
 }
+.idshadow.in {
+    margin-left: 20px;
+}
+.mine{
+    color: blue;
+    margin-right: 2%;
 
+}
+.mine.btn-default{
+    margin: 2px;
+    color: blue!important;
+    background-color: whitesmoke!important;
+    text-shadow: 0px 0px 0px;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    border-bottom-left-radius: 5px;
+}
+.mine.btn-default:visited{
+    margin: 2px;
+    color: blue!important;
+    background-color: whitesmoke!important;
+    text-shadow: 0px 0px 0px;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    border-bottom-left-radius: 5px;
+}
+.mine.btn-default:hover{
+    background-color: gray!important;
+    color: white!important;
+}
 h4.ident {
     color : #999
 }
@@ -136,7 +167,12 @@ h5.hist {
     color: whitesmoke;
     background-color: black;
 }
-
+h5.btn-unit {
+    color: black;
+    font-weight: bold;
+    margin-top: 0px;
+    margin: 13px;
+}
 .btn-primary-white {
     color: whitesmoke!important;
     border-color: #333B3B;
@@ -171,7 +207,7 @@ h5.hist {
     padding: 8px 10px;
 }
 a.linkjumbo:link, :visited {
-    background-color: #ccccff;
+    background-color: red;
     border: darkorange;
     border-style: double;
     text-decoration: none;

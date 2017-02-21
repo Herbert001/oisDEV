@@ -146,7 +146,23 @@
  * Ausgabe der Einträge
  ***********************/
 
+//Ermittelt die Anzahl der Beiträge
+$result_c = $db->query("SELECT COUNT(*) FROM historie WHERE u_id = '" . $_SESSION['uids'] . "'");
+$row = $result_c->fetch_row();
+echo '#: ', $row[0];
 
+//Berechne alles notwendige für die Blätterfunktion
+$entrysPerPage = 3;                                                             // Artikel pro Seite
+$pages = ceil($row[0]/$entrysPerPage);                                          // Berechne wieviel Seiten
+echo $pages;                                                                    // Anzahl Seiten
+                                                                                // Erste Seite
+echo "<p><a href='./'>".'[Start]'."</a> ";
+// For Schleife für Seitendurchlauf
+for ($i = 1; $i <= $pages; $i++) {
+    echo "<a href='?page=".$i."'>Seite ".$i."</a> ";
+}
+// Letzt Seite
+echo "<a href='?page=$pages'>".'[Ende]'."</a></p>";
 
 echo '</div>';
 
