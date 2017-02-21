@@ -55,8 +55,8 @@ include 'inc/func/function.php';
   <div class="container">
   <h1 class="mod1">
 
-<?php
 
+<?php
                                                                                 // Abfrage Historie
 $historie =("SELECT a.id, a.u_id, b.u_id, b.date_add, b.notes, b.name_short, d.cat_name
               FROM unit AS a
