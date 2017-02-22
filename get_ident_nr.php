@@ -77,20 +77,20 @@ if ($result = $db->query($customer_unit)) {                                     
         foreach ($rows as $row) {
           ?>
            <div class='row'>                                                   <!-- Ausgabe Kundenadresse Start -->
-            <div class='col-md-3 col-xs-12'>
-             <h4 class='idshadow'><?php echo $row['cs_customer_name']; ?><br />
+            <div class='col-md-4 col-xs-12'>
+             <h2 class='idshadow'><?php echo $row['cs_customer_name']; ?><br />
              <h4 class='idshadow'><?php echo $row['cs_street']; ?><br />
              <h4 class='idshadow'><?php echo $row['cs_zip']. "&nbsp" . $row['ort'];             ?>
             </div>                                                              <!-- Ausgabe Kundenadresse Ende -->
-            <div class ='col-md-offset-1 col-md-6 col-xs-offset-0 col-xs-12'>   <!-- Ausgabe Kontaktperson Start -->
+               <!-- Ausgabe Kontaktperson Start -->
              <div class='col-md-5 col-xs-12 pull-right' id='ausgabeText'>
 
-                <h4 class='idshadow'><?php if (isset($row['Nachname']) ) {  echo "Ansprechpartner: ";}else{ echo "u";} ?><br />
+                <h4 class='idshadow in'><?php if (isset($row['Nachname']) ) {  echo "Ansprechpartner: ";}else{ echo "u";} ?><br />
                 <h4 class='idshadow'><?php echo $row['Vorname']. " ". $row['Nachname']; ?><br />
                 <?php istvorhd($row['Tel2']);
                  ?>
                     <h4 class='idshadow'><i class="fa fa-phone" aria-hidden="true"></i><?php echo " ".$row['Tel1']. "<br /><i class='fa fa-phone' aria-hidden='true'></i>" ." ". $row['Tel2']; ?><br />
-                    <h4 class='idshadow'><i class="fa fa-at" aria-hidden="true"><?php echo " ".$row['Email']. "</i></h4>" ;
+                    <h4 class='idshadow'><?php echo " ".$row['Email']. "</h4>" ;
                      echo  "</div></div></div>";
                                                    // Setzen der Variablen zur späteren Verwendung
 
@@ -109,7 +109,7 @@ $units = ("SELECT a.ident_id, a.u_id FROM unit a WHERE a.u_id = '" . $unit_num_i
                           if ($result->num_rows) {
                           $rows = $result->fetch_all(MYSQLI_BOTH);
                            foreach ($rows as $row) {                           // Ausgabe units in Schleife da mehrere vorhanden sein können
-                             echo "&nbsp <a class='linkjumbo' href='/get_ident_nr.php?identid=" .$row['0'] ."&submit=' >" .$row['0']."</a><br />";
+                             echo "&nbsp <a class='btn btn-default mine' href='/get_ident_nr.php?identid=" .$row['0'] ."&submit=' >" .$row['0']."</a><br />";
                            }}else { echo "Keine Daten";}}
                                     echo "</div></div></div>";
 
@@ -318,7 +318,7 @@ if ($result = $db->query($result_notes)){
   }
 }
 //Ermittelt die Anzahl der Beiträge
-$result_c = $db->query("SELECT COUNT(*) FROM historie WHERE u_id = '" . $unit_num_id . "'");
+$result_c = $db->query("SELECT COUNT(*) FROM historie WHERE u_ident_id = '" . $idnr . "'");
 $row = $result_c->fetch_row();
 echo '#: ', $row[0];
 
