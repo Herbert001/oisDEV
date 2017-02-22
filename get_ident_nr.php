@@ -93,7 +93,7 @@ if ($result = $db->query($customer_unit)) {                                     
   if (!is_null($row['Tel2'])){ ?> <h4 class='idshadow in'><i class='fa fa-phone' aria-hidden='true'></i><?php echo " ".$row['Tel2'] . "<br />";}
   if (!is_null($row['Email'])){ ?> <h4 class='idshadow in' aria-hidden='true'><?php echo " ".$row['Email'] . "<br />";}
   ?>
-      </div></div>
+      </div></div></div>
 
   <?php                                                 // Setzen der Variablen zur späteren Verwendung
 
@@ -105,9 +105,9 @@ $units = ("SELECT a.ident_id, a.u_id FROM unit a WHERE a.u_id = '" . $unit_num_i
  ?>
                    <div class = 'container text-left'>
                         <div class='row' id='lowpadding'>
-                            <div class='col-md-4 col-xs-6 pull-left'> <h4 class='idshadow'> Kundennummer:&nbsp; <?php echo $row['cs_id'];?></h4></div>
-                            <div class='col-md-4 col-xs-6'> <h4 class='idshadow' pull-right> Unitnummer:&nbsp; <?php echo $unit_num_id;?></h4></div>
-                            <div class='col-md-4 col-xs-12'> <h4 class='idshadow' pull-right> IdentifikationsID:&nbsp <br />
+                            <div class='col-md-4 col-xs-6'> <h4 class='idshadow pull-left'>Kundennummer:&nbsp; <?php echo $row['cs_id'];?></h4></div>
+                            <div class='col-md-4 col-xs-6'> <h4 class='idshadow pull-left'>Unitnummer:&nbsp; <?php echo $unit_num_id;?></h4></div>
+                            <div class='col-md-4 col-xs-12'> <h4 class='idshadow pull-left'>IdentifikationsID:&nbsp <br />
 <?php                   if ($result = $db->query($units)) {                      //Abfrage wieviele Units sind unter der u_id gespeichert
                           if ($result->num_rows) {
                           $rows = $result->fetch_all(MYSQLI_BOTH);
@@ -320,72 +320,52 @@ if ($result = $db->query($result_notes)){
     }
   }
 }
-//Ermittelt die Anzahl der Beiträge
-$result_c = $db->query("SELECT COUNT(*) FROM historie WHERE u_ident_id = '" . $idnr . "'");
-$row = $result_c->fetch_row();
-echo '#: ', $row[0];
 
-//Berechne alles notwendige für die Blätterfunktion
-$entrysPerPage = 3;                                                             // Artikel pro Seite
-$pages = ceil($row[0]/$entrysPerPage);                                          // Berechne wieviel Seiten
-echo $pages;                                                                    // Anzahl Seiten
-                                                                                // Erste Seite
-echo "<p><a href='./'>".'[Start]'."</a> ";
-// For Schleife für Seitendurchlauf
-for ($i = 1; $i <= $pages; $i++) {
-    echo "<a href='?page=".$i."'>Seite ".$i."</a> ";
-}
-// Letzt Seite
-echo "<a href='?page=$pages'>".'[Ende]'."</a></p>";
-
-echo '</div>';
 
 // Nach Anschluß alle Aufgaben, SQL Verbindung schließen
-$db->close();
+//$db->close();
 
  ?>                                   </div>
-    </div>                            </div>
+    </div>
+              <!-- +++++++++++++++++++++++++++START FORM ADD NEW TEXT++++++++++++++++++++++ -->
+            <div class="panel panel-default">
+                <div class="panel panel-heading">Neuer Eintrag</div>
+                    <div class="panel panel-info text-primary text-center">Anlage <?php echo $idnr; ?></div>
+                        <div class="panel panel-body">
+<form class="form-horizontal" data-toggle="validator" role="form" id ="form" name="form" action="send_formdata_history.php" method="POST" >
+  <div class="form-group">
+      <label for="kundnr" class="col-sm-2 control-label">Kategorie </label>
+    <div class="col-sm-10">
+      <div class="input-group">
+       <select type="text" class="form-control" name="ocatkey" id="cat"  autofocus="" />
+<?php
+// +++++++++++++++++++++ Abfrage SELECT Kategorie hinzufügen von Eintrag +++++++++++++++++++++++++++
+        $getCat = ("SELECT * FROM category_history");
+        if ($result_cat = $db->query($getCat)) {
+          if ($result_cat->num_rows) {
+            $rows = $result_cat->fetch_all(MYSQLI_ASSOC);
+            foreach ($rows as $row){
+              echo '<option value="'.$row['catkey'].' "> '.$row['cat_name'] .'</option>';
+            }}}
+?>
+       </select>
+          <textarea rows="15" form="form" class="form-control" id="texta" name="texta"><?PHP if(!empty(htmlspecialchars($_SESSION['texthier']))){ echo $_SESSION['texthier'];} ?> </textarea>
+          <input type="hidden" value="<?php echo $idnr; ?>" name="AnlagenID"></input>
+    </div>  </div>
+    </div> </div>
+                    <button type="submit" name="submit" id="submit" class="btn pull-right btn-primary">Give it to me</button><br /><br />
+                    <p> </p>
+            </div>
+              <!-- +++++++++++++++++++++++++++FORM END ADD NEW TEXT++++++++++++++++++++++ -->
+
+
+    </div></div>
     </div></div>
 
 
-<!-- +++++++++++++++++++++++++++Modal++++++++++++++++++++++ -->
-
-
-<div class="modal fade" id="modalstart" tabindex="-1" role="dialog" aria-labelledby="meinModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Schließen"><span aria-hidden="true">&times;</span></button>
-        <h3 class="modal-title" id="meinModalLabel">Neuen Eintrag hinzufügen</h3><br />
-        <h5>Der Eintrag muss nach dem absenden noch vom Admin freigeschaltet werden!</h5>
-      </div>
-      <div class="modal-body">
-        <div class="container-fluid">
-
-<form class="form-horizontal" data-toggle="validator" role="form" id ="form" name="form" action="send_formdata_neuerKunde2.php" method="POST" >
-
-  <div class="form-group">
-      <label for="kundnr" class="col-sm-2 control-label">Kundennummer
-    <span class="asteriskField">*
-    </span>
-    </label>
-    <div class="col-sm-10">
-      <div class="input-group">
-       <div class="input-group-addon">
-        <i class="fa fa-hashtag fa-fw"></i>
-       </div>
-        <input type="number" class="form-control" name="k_kdnr" id="kundnr" required="" data-required-error="Pflichtfeld" value="<?php echo $k_kdnr; ?>" autofocus="" placeholder="Kundennummer" />
-      </div>
 
 
 
-        </div>
-      </div></form>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
-
-      </div>
-    </div>
   </div>
 </div> </div></div>
 
