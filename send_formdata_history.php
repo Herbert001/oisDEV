@@ -13,9 +13,10 @@ include 'func/anzeige_func.php';
 $catkey       = htmlspecialchars($_POST['ocatkey']);
 $anlageComment= htmlspecialchars($_POST['texta']);
 $IdAnlage     = htmlspecialchars($_POST['AnlagenID']);
+$_SESSION['texthier'] = $anlageComment;
 //echo htmlspecialchars($_SESSION['texthier']);
 echo $IdAnlage;
-
+var_dump($_SESSION['texthier']);
 // Prüfung, ob gesetzt und nicht leer
 if(isset($_POST['submit']))
 {
