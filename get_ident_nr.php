@@ -82,17 +82,20 @@ if ($result = $db->query($customer_unit)) {                                     
              <h4 class='idshadow'><?php echo $row['cs_street']; ?><br />
              <h4 class='idshadow'><?php echo $row['cs_zip']. "&nbsp" . $row['ort'];             ?>
             </div>                                                              <!-- Ausgabe Kundenadresse Ende -->
-               <!-- Ausgabe Kontaktperson Start -->
-             <div class='col-md-5 col-xs-12 pull-right' id='ausgabeText'>
+                <!-- Ausgabe Kontaktperson Start -->
+             <div class='col-md-4 col-xs-12 pull-right' id='ausgabeText'>
 
-                <h4 class='idshadow in'><?php if (isset($row['Nachname']) ) {  echo "Ansprechpartner: ";}else{ echo "u";} ?><br />
-                <h4 class='idshadow'><?php echo $row['Vorname']. " ". $row['Nachname']; ?><br />
-                <?php istvorhd($row['Tel2']);
-                 ?>
-                    <h4 class='idshadow'><i class="fa fa-phone" aria-hidden="true"></i><?php echo " ".$row['Tel1']. "<br /><i class='fa fa-phone' aria-hidden='true'></i>" ." ". $row['Tel2']; ?><br />
-                    <h4 class='idshadow'><?php echo " ".$row['Email']. "</h4>" ;
-                     echo  "</div></div></div>";
-                                                   // Setzen der Variablen zur späteren Verwendung
+                <h4 class='idshadow'><?php if (isset($row['Nachname']) ) {  echo "Ansprechpartner: ";} ?><br />
+                <h4 class='idshadow in'><?php echo $row['Vorname']. " ". $row['Nachname']; ?><br />
+  <?php // Abfrage ob Ansprechpartner vorhanden ,dann erst Ausgabe.
+
+  if (!is_null($row['Tel1'])){ ?> <h4 class='idshadow in'><i class='fa fa-phone' aria-hidden='true'></i><?php echo " ".$row['Tel1'] . "<br />";}
+  if (!is_null($row['Tel2'])){ ?> <h4 class='idshadow in'><i class='fa fa-phone' aria-hidden='true'></i><?php echo " ".$row['Tel2'] . "<br />";}
+  if (!is_null($row['Email'])){ ?> <h4 class='idshadow in' aria-hidden='true'><?php echo " ".$row['Email'] . "<br />";}
+  ?>
+      </div></div>
+
+  <?php                                                 // Setzen der Variablen zur späteren Verwendung
 
 }}else {echo "<h2 class='idshadow'>". $error_no_id. "<br />";}}
 
@@ -102,7 +105,7 @@ $units = ("SELECT a.ident_id, a.u_id FROM unit a WHERE a.u_id = '" . $unit_num_i
  ?>
                    <div class = 'container text-left'>
                         <div class='row' id='lowpadding'>
-                            <div class='col-md-4 col-xs-6'> <h4 class='idshadow'> Kundennummer:&nbsp; <?php echo $row['cs_id'];?></h4></div>
+                            <div class='col-md-4 col-xs-6 pull-left'> <h4 class='idshadow'> Kundennummer:&nbsp; <?php echo $row['cs_id'];?></h4></div>
                             <div class='col-md-4 col-xs-6'> <h4 class='idshadow' pull-right> Unitnummer:&nbsp; <?php echo $unit_num_id;?></h4></div>
                             <div class='col-md-4 col-xs-12'> <h4 class='idshadow' pull-right> IdentifikationsID:&nbsp <br />
 <?php                   if ($result = $db->query($units)) {                      //Abfrage wieviele Units sind unter der u_id gespeichert
