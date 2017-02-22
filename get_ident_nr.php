@@ -26,6 +26,7 @@ if (empty($_SESSION['usr_id'])) {
 include 'header2.php';
 include 'inc/func/anzeige_func.php';
 include 'inc/func/function.php';
+
   if(isset($_REQUEST['submit'], $_GET['identid']))                             // Abfrage ob Button gedrückt wurde und Variable vorhanden
   {
     $errorMessage = "<br>";
@@ -112,7 +113,7 @@ $units = ("SELECT a.ident_id, a.u_id FROM unit a WHERE a.u_id = '" . $unit_num_i
                           if ($result->num_rows) {
                           $rows = $result->fetch_all(MYSQLI_BOTH);
                            foreach ($rows as $row) {                           // Ausgabe units in Schleife da mehrere vorhanden sein können
-                             echo "&nbsp <a class='btn btn-default mine' href='/get_ident_nr.php?identid=" .$row['0'] ."&submit=' >" .$row['0']."</a><br />";
+                             echo "<a class='btn btn-default mine' href='/get_ident_nr.php?identid=" .$row['0'] ."&submit='>" .$row['0']."</a><br />";
                            }}else { echo "Keine Daten";}}
                                     echo "</div></div></div>";
 
@@ -349,11 +350,11 @@ if ($result = $db->query($result_notes)){
             }}}
 ?>
        </select>
-          <textarea rows="15" form="form" class="form-control" id="texta" name="texta"><?PHP if(!empty(htmlspecialchars($_SESSION['texthier']))){ echo $_SESSION['texthier'];} ?> </textarea>
+          <textarea rows="15" form="form" class="form-control" id="texta" name="texta"><?PHP if(!empty(htmlspecialchars($_SESSION['texthier']))){ echo $_SESSION['texthier'];}?> </textarea>
           <input type="hidden" value="<?php echo $idnr; ?>" name="AnlagenID"></input>
     </div>  </div>
     </div> </div>
-                    <button type="submit" name="submit" id="submit" class="btn pull-right btn-primary">Give it to me</button><br /><br />
+                    <button type="submit" name="submit" id="submit" class="btn pull-right btn-primary" onclick=" <?php delSesVar(); ?>">Give it to me</button><br /><br />
                     <p> </p>
             </div>
               <!-- +++++++++++++++++++++++++++FORM END ADD NEW TEXT++++++++++++++++++++++ -->
