@@ -138,3 +138,6 @@ function istvorhd($var_query) {
   if (isset($var_query));
   return TRUE;
 }
+function delSesVar(){
+unset($_SESSION['texthier']);
+}
