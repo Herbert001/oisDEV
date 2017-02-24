@@ -34,8 +34,8 @@ include 'inc/func/function.php';
     if (isset($_SESSION['uids'])) {
        $unit_id = $_SESSION['uids'];
        $_SESSION['usr_name'];
-    } else {
-        echo ("<h2 class='shadow'> Es wurde keine Anlagennummer übergeben! <br><br></h2>");
+           } else {
+              echo ("<h2 class='shadow'> Es wurde keine Anlagennummer übergeben! <br><br></h2>");
 
 ?>
 <form class="form-horizontal" data-toggle="validator" role="form" id ="form" name="form" action="get_ident_nr.php" method="GET" >
@@ -53,8 +53,8 @@ include 'inc/func/function.php';
   </div>
 </form>
     </div>
-<?php }
-exit;
+<?php exit;}
+
 
 // Abfrage Historie
 $historie =("SELECT a.id, a.u_id, b.u_id, b.date_add, b.notes, b.name_short, d.cat_name
@@ -79,9 +79,9 @@ if ($result = $db->query($customer_unit_ds)) {                                  
             echo "<br />" . "<br />" . "<br /> </div>";
             echo "<div class = 'container text-left'>";
             echo "<div class='row'>";
-            echo "<div class='col-md-4 col-xs-6'> <h4 class='idshadow'> Kundennummer:&nbsp" .$row['cs_id'] . "</div>";
+            echo "<div class='col-md-4 col-xs-6'> <h4 class='idshadow pull-right'> Kundennummer:&nbsp" .$row['cs_id'] . "</div>";
             echo "<div class='col-md-4 col-xs-6'> <h4 class='idshadow pull-right'>Unitnummer: " . $_SESSION['uids']. "</div>";}}}
-            echo "<div class='col-md-4 col-xs-6'> <h4 class='idshadow pull-right'>IdentifikationsID: " ."</h4></div>";
+            echo "<div class='col-md-4 col-xs-12'> <h4 class='idshadow pull-right'>IdentifikationsID: " ."</h4></div>";
 
 // Abfrage welche Identifikationsnummer(n) gehören zu der u_id Ausgabe im Jumbotron
 $idsFromUnit = ("SELECT a.id, a.u_id, a.ident_id AS ID, a.typ_id FROM unit a
@@ -91,8 +91,14 @@ if ($result = $db->query($idsFromUnit)) {
   $rows = $result->fetch_all(MYSQLI_ASSOC);
     foreach ($rows as $row) {
       $anlagenID = $row['ID'];
-      echo  "&nbsp <a class='btn btn-default mine pull-right href='/get_ident_nr.php?identid=" .$row['ID']."&submit=' >" .$row['ID']. "</a><br/><br />";  //Ausgabe der IDs auf der rechten Seite im Jumbotron
-      }}
+      //echo "<button class= 'btn btn-info btn-xs pull-right' role='button'>";
+      //echo  "&nbsp <a class='btn' href='get_ident_nr.php?identid=" .$row['ID']."&submit=' >" .$row['ID']. "</a>";  //Ausgabe der IDs auf der rechten Seite im Jumbotron
+      //echo "<br />";
+      echo "<div class='col-md-4 col-xs-12'>";
+      echo "<a class='btn btn-default mine pull-right' href='/get_ident_nr.php?identid=" .$row['ID'] ."&submit='>" .$row['ID']."</a>";
+      echo "</div>";
+
+    }}
 }?>
 </div><br />
 </div> </div> </div>
