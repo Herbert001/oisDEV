@@ -94,7 +94,7 @@ if ($result = $db->query($idsFromUnit)) {
       //echo "<button class= 'btn btn-info btn-xs pull-right' role='button'>";
       //echo  "&nbsp <a class='btn' href='get_ident_nr.php?identid=" .$row['ID']."&submit=' >" .$row['ID']. "</a>";  //Ausgabe der IDs auf der rechten Seite im Jumbotron
       //echo "<br />";
-      echo "<div class='col-md-4 col-xs-12'>";
+      echo "<div class='col-md-12 col-xs-12'>";
       echo "<a class='btn btn-default mine pull-right' href='/get_ident_nr.php?identid=" .$row['ID'] ."&submit='>" .$row['ID']."</a>";
       echo "</div>";
 
