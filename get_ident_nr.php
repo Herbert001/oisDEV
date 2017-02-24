@@ -30,7 +30,8 @@ include 'inc/func/function.php';
   if(isset($_REQUEST['submit'], $_GET['identid']))                             // Abfrage ob Button gedrückt wurde und Variable vorhanden
   {
     $errorMessage = "<br>";
-    $idnr=  clean($_GET['identid']);                                           //  $idnr = Übermittelte Anlagenbezeichnung aus Dataunitsmall.php
+    $idnr=  clean($_GET['identid']);
+                                                                                 //  $idnr = Übermittelte Anlagenbezeichnung aus Dataunitsmall.php
     }else{                                                                      // wenn nach Anlagen gesucht wird.
     echo "No way";
     exit;
