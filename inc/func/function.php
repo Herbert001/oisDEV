@@ -75,7 +75,7 @@ LEFT JOIN contact_person f
 ON e.cp_c_link_id = f.id
 LEFT JOIN ort_plz d
 ON c.cs_zip = d.Plz
-WHERE a.u_id = '4711' GROUP BY cs_customer_name" );
+WHERE a.u_id = '" . $unit_num_id . "' GROUP BY cs_customer_name" );
 }
 
 function get_units($unit_id){
