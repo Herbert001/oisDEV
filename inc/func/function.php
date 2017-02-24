@@ -58,7 +58,7 @@ WHERE a.u_id = '" . $unit_id  . "' AND a.u_visible = 1 GROUP BY c.cs_customer_na
 
 
 
-function customer_unit($unit_num_id) {                                            //Funktion in get_ident_nr.php                                                                               //2017310101
+function customer_unit($unit_num_id) {                                       //Funktion in get_ident_nr.php                                                                               //2017310101
   global $customer_unit;                                                        //Abfrage Unit welcher Kunde
   return $customer_unit = ("SELECT DISTINCT a.u_id, a.ident_id, b.u_id, b.cs_id, c.cs_id,
     c.cs_customer_name, c.cs_street, c.cs_zip, d.ort, f.cp_first_name AS Vorname,
@@ -75,7 +75,7 @@ LEFT JOIN contact_person f
 ON e.cp_c_link_id = f.id
 LEFT JOIN ort_plz d
 ON c.cs_zip = d.Plz
-WHERE a.u_id = '" . $unit_num_id . "' GROUP BY cs_customer_name" );
+WHERE a.u_id = '4711' GROUP BY cs_customer_name" );
 }
 
 function get_units($unit_id){
