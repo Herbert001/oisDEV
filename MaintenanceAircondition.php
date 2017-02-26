@@ -44,7 +44,7 @@ if (empty($_SESSION['usr_id'])) {
         // +++++++++++Script disable/enable Inputfield von KundenID Start +++++++++++
         $(document).ready(function(){
           $('#IDKunde').attr('disabled', true);
-            $('#editKundenID').on('click', function(){               
+            $('#editKundenID').on('click', function(){              
               $('#IDKunde').attr('disabled', !$('#IDKunde').attr('disabled')); // Das ist der Toggle !
             });
         });
